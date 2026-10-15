@@ -5,9 +5,9 @@ Excel workbooks, tasks and contacts through 87 tools over Microsoft Graph, using
 calling. I built it on my own, working agent-first in Claude Code: I made the design and product calls and
 ran the evaluations below.
 
-It passed Microsoft's Teams Store certification and was published on the Teams Store (August 2026) and
-Microsoft AppSource (May 2026). It never had customers, and the hosted service has been shut down since
-October 2026.
+It passed Microsoft's Marketplace and Teams Store certification and was published on Microsoft AppSource
+(May 2026) and the Teams Store (August 2026). It never had a paying customer, and the hosted service has
+been shut down since October 2026.
 
 The product repository is private. This repository holds selected code, copied from it unchanged except
 where a `// [excerpt: …]` marker says what was cut or adapted, plus the tool-selection test data and an
@@ -90,9 +90,10 @@ npm run demo:score       # one case scored two ways: a draft passes, an unasked 
 - **The test requests were written by a language model**, not real users. The 142 agent-eval cases were
   also used to choose the design; the sealed sets were scored once.
 
-Two bugs the evals caught, both fixed: the agent confirmed a saved automation as "Deleted:", copying an
-example from its prompt, and "from now on, handle my briefing automatically" saved a memory note instead
-of scheduling anything.
+The evals caught one bug: the agent confirmed a saved automation as "Deleted:", copying an example from
+its prompt. They missed another: "from now on, handle my briefing automatically" saved a memory note
+instead of scheduling anything, and the case passed because it didn't require a saved automation. Both
+are fixed, and that case now requires one.
 
 ## What I'd change next
 
