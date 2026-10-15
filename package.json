@@ -1,0 +1,19 @@
+{
+  "name": "m365-agent",
+  "private": true,
+  "type": "module",
+  "description": "Selected code and evaluation data from Microclaw, an AI assistant for Microsoft 365.",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "eval:selection": "tsx scripts/eval-tool-selection.ts eval-data/tool-selection/test3.json eval-data/tool-selection/followups-test3.json eval-data/tool-selection/test.json eval-data/tool-selection/followups-test.json",
+    "demo:score": "tsx scripts/score-demo.ts"
+  },
+  "devDependencies": {
+    "@types/node": "25.9.3",
+    "openai": "6.48.0",
+    "tsx": "4.23.1",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
+  }
+}

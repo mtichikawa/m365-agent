@@ -1,0 +1,768 @@
+[
+ {
+  "id": "f2-001",
+  "prev_user": "any new mail?",
+  "prev_assistant": "You have 3 unread: 1) Lorna Vance - Contract redlines (with attachment) 2) Peakview Weekly newsletter 3) Desmond Achebe - Lunch thursday?",
+  "query": "reply to the third one, tell him thursday works",
+  "tools": [
+   "reply_to_mail"
+  ]
+ },
+ {
+  "id": "f2-002",
+  "prev_user": "any new mail?",
+  "prev_assistant": "You have 3 unread: 1) Lorna Vance - Contract redlines (with attachment) 2) Peakview Weekly newsletter 3) Desmond Achebe - Lunch thursday?",
+  "query": "mark the newsletter read",
+  "tools": [
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "f2-003",
+  "prev_user": "any new mail?",
+  "prev_assistant": "You have 3 unread: 1) Lorna Vance - Contract redlines (with attachment) 2) Peakview Weekly newsletter 3) Desmond Achebe - Lunch thursday?",
+  "query": "forward the first one to legal@example.com",
+  "tools": [
+   "forward_mail"
+  ]
+ },
+ {
+  "id": "f2-004",
+  "prev_user": "any new mail?",
+  "prev_assistant": "You have 3 unread: 1) Lorna Vance - Contract redlines (with attachment) 2) Peakview Weekly newsletter 3) Desmond Achebe - Lunch thursday?",
+  "query": "whats in the attachment on the first one",
+  "tools": [
+   "get_mail_attachments",
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "f2-005",
+  "prev_user": "find a time for me and Noor next week",
+  "prev_assistant": "You and Noor are both free Tue 10-11, Wed 2-3, or Thu 9-10. Want me to book one?",
+  "query": "the second one",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "f2-006",
+  "prev_user": "set up a call with tess@example.com tomorrow",
+  "prev_assistant": "Tomorrow you're free 10-11 and 2-4. Want me to send the invite for 10am?",
+  "query": "yes",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "f2-007",
+  "prev_user": "email Gareth that I'm out friday",
+  "prev_assistant": "Here's the draft to Gareth (gareth.lowe@example.com): 'Hi Gareth, just a heads up I'll be out Friday.' Send it?",
+  "query": "do it",
+  "tools": [
+   "send_mail"
+  ]
+ },
+ {
+  "id": "f2-008",
+  "prev_user": "what's on tomorrow",
+  "prev_assistant": "Tomorrow: 9am Standup, 11am Vendor sync, 2pm Design review.",
+  "query": "cancel the 11",
+  "tools": [
+   "delete_event"
+  ]
+ },
+ {
+  "id": "f2-009",
+  "prev_user": "what's on tomorrow",
+  "prev_assistant": "Tomorrow: 9am Standup, 11am Vendor sync, 2pm Design review.",
+  "query": "move the design review to 3",
+  "tools": [
+   "update_event"
+  ]
+ },
+ {
+  "id": "f2-010",
+  "prev_user": "what's on thursday",
+  "prev_assistant": "Thursday: 10am Budget review, 1pm Lunch with Arjun.",
+  "query": "what about friday?",
+  "tools": [
+   "get_calendar_events"
+  ]
+ },
+ {
+  "id": "f2-011",
+  "prev_user": "move my 2pm to 4",
+  "prev_assistant": "Done, Design review is now 4-5pm. Attendees: you, Callum Reyes, Noor Haddad.",
+  "query": "is Elias free then?",
+  "tools": [
+   "search_contacts",
+   "get_free_busy"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "f2-012",
+  "prev_user": "what's on my to do list",
+  "prev_assistant": "Your Tasks list: 1) Expense report 2) Call the landlord 3) Renew gym membership",
+  "query": "mark the first one done",
+  "tools": [
+   "update_todo_task"
+  ]
+ },
+ {
+  "id": "f2-013",
+  "prev_user": "what's on my to do list",
+  "prev_assistant": "Your Tasks list: 1) Expense report 2) Call the landlord 3) Renew gym membership",
+  "query": "delete the last one",
+  "tools": [
+   "delete_todo_task"
+  ]
+ },
+ {
+  "id": "f2-014",
+  "prev_user": "what did Odette say in our chat",
+  "prev_assistant": "Odette asked whether you can review the vendor slides by Thursday or Friday.",
+  "query": "tell her thursday works",
+  "tools": [
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "f2-015",
+  "prev_user": "catch me up on the general channel",
+  "prev_assistant": "The team shipped the 2.4 release and Harriet thanked everyone for the late nights.",
+  "query": "post a thanks to everyone there",
+  "tools": [
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "f2-016",
+  "prev_user": "find the Q3 budget",
+  "prev_assistant": "Found 2 files: 1) Q3 Budget.xlsx (Finance) 2) Q3 Budget notes.txt",
+  "query": "read the second one",
+  "tools": [
+   "read_onedrive_file"
+  ]
+ },
+ {
+  "id": "f2-017",
+  "prev_user": "find the Q3 budget",
+  "prev_assistant": "Found 2 files: 1) Q3 Budget.xlsx (Finance) 2) Q3 Budget notes.txt",
+  "query": "who else can see the first one",
+  "tools": [
+   "get_file_permissions"
+  ]
+ },
+ {
+  "id": "f2-018",
+  "prev_user": "find the Q3 budget",
+  "prev_assistant": "Found 2 files: 1) Q3 Budget.xlsx (Finance) 2) Q3 Budget notes.txt",
+  "query": "share the spreadsheet with ana@example.com",
+  "tools": [
+   "create_sharing_link",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "f2-019",
+  "prev_user": "delete old-headshot.png",
+  "prev_assistant": "I found old-headshot.png in Pictures. Deleting it is permanent. Go ahead?",
+  "query": "yes go ahead",
+  "tools": [
+   "delete_drive_item"
+  ]
+ },
+ {
+  "id": "f2-020",
+  "prev_user": "find the logo files",
+  "prev_assistant": "Found logo-final.png in Documents.",
+  "query": "move it to the Archive folder",
+  "tools": [
+   "search_onedrive",
+   "move_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "f2-021",
+  "prev_user": "what automations do I have",
+  "prev_assistant": "1) VIP email alert (active) 2) Invoice to todo (active) 3) Meeting cancellation watch (paused)",
+  "query": "pause the second",
+  "tools": [
+   "pause_automation"
+  ]
+ },
+ {
+  "id": "f2-022",
+  "prev_user": "what automations do I have",
+  "prev_assistant": "1) VIP email alert (active) 2) Invoice to todo (active) 3) Meeting cancellation watch (paused)",
+  "query": "turn the third back on",
+  "tools": [
+   "enable_automation"
+  ]
+ },
+ {
+  "id": "f2-023",
+  "prev_user": "what automations do I have",
+  "prev_assistant": "1) VIP email alert (active) 2) Invoice to todo (active) 3) Meeting cancellation watch (paused)",
+  "query": "delete all of them",
+  "tools": [
+   "delete_automation"
+  ]
+ },
+ {
+  "id": "f2-024",
+  "prev_user": "what scheduled tasks do I have",
+  "prev_assistant": "1) Monday week summary (Mon 9am) 2) Inbox check (weekdays 8am) 3) Mileage reminder (1st of month)",
+  "query": "cancel the mileage one",
+  "tools": [
+   "cancel_scheduled_task"
+  ]
+ },
+ {
+  "id": "f2-025",
+  "prev_user": "what scheduled tasks do I have",
+  "prev_assistant": "1) Monday week summary (Mon 9am) 2) Inbox check (weekdays 8am) 3) Mileage reminder (1st of month)",
+  "query": "pause the inbox check",
+  "tools": [
+   "pause_scheduled_task"
+  ]
+ },
+ {
+  "id": "f2-026",
+  "prev_user": "pause the monday summary",
+  "prev_assistant": "Paused the Monday week summary.",
+  "query": "actually resume it",
+  "tools": [
+   "resume_scheduled_task"
+  ]
+ },
+ {
+  "id": "f2-027",
+  "prev_user": "summarize yesterday's roadmap meeting",
+  "prev_assistant": "Summary: launch slips to Nov 4; Callum owns pricing page; Noor to confirm vendor SLA. Attendees: Callum Reyes, Noor Haddad, Wes Tran.",
+  "query": "email that to the attendees",
+  "tools": [
+   "send_mail"
+  ]
+ },
+ {
+  "id": "f2-028",
+  "prev_user": "summarize yesterday's roadmap meeting",
+  "prev_assistant": "Summary: launch slips to Nov 4; Callum owns pricing page; Noor to confirm vendor SLA.",
+  "query": "add those action items to my todo",
+  "tools": [
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "f2-029",
+  "prev_user": "any invites I haven't answered?",
+  "prev_assistant": "2 pending: Board prep (Thu 10am, from Lorna Vance) and Team lunch (Fri noon).",
+  "query": "accept the board prep one",
+  "tools": [
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "f2-030",
+  "prev_user": "anything from Tomas?",
+  "prev_assistant": "Tomas Brandt emailed yesterday: 'Signed lease attached'. It has 1 attachment: Lease_signed.pdf.",
+  "query": "what does the pdf say",
+  "tools": [
+   "get_mail_attachments",
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "f2-031",
+  "prev_user": "what's attached to Ingrid's email",
+  "prev_assistant": "2 attachments: floorplan.png and notes.docx.",
+  "query": "open the png",
+  "tools": [
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "f2-032",
+  "prev_user": "thanks",
+  "prev_assistant": "Anytime!",
+  "query": "thanks again",
+  "tools": []
+ },
+ {
+  "id": "f2-033",
+  "prev_user": "should I archive the old drafts folder?",
+  "prev_assistant": "I can move it to Archive or leave it. Want me to move it?",
+  "query": "nah leave it",
+  "tools": []
+ },
+ {
+  "id": "f2-034",
+  "prev_user": "whats on the launch board",
+  "prev_assistant": "Launch plan tasks: 1) Print banners (50%) 2) Website copy (0%) 3) Press list (100%)",
+  "query": "mark the banners one complete",
+  "tools": [
+   "update_planner_task"
+  ]
+ },
+ {
+  "id": "f2-035",
+  "prev_user": "whats on the launch board",
+  "prev_assistant": "Launch plan tasks: 1) Print banners (50%) 2) Website copy (0%) 3) Press list (100%)",
+  "query": "add one for Hector to order chairs",
+  "tools": [
+   "search_people",
+   "create_planner_task"
+  ],
+  "alt_map": {
+   "search_people": [
+    "search_contacts"
+   ]
+  }
+ },
+ {
+  "id": "f2-036",
+  "prev_user": "what pages are in my Meetings section",
+  "prev_assistant": "Pages: 1) Vendor sync Oct 7 2) Budget review Oct 9 3) 1:1 Petra Oct 10",
+  "query": "open the one from oct 9",
+  "tools": [
+   "get_onenote_page_content"
+  ]
+ },
+ {
+  "id": "f2-037",
+  "prev_user": "what sections are in my Work notebook",
+  "prev_assistant": "Sections: Meetings, Projects, Ideas.",
+  "query": "what pages are in Projects",
+  "tools": [
+   "list_onenote_pages"
+  ]
+ },
+ {
+  "id": "f2-038",
+  "prev_user": "what notebooks do i have",
+  "prev_assistant": "You have 2 notebooks: Work and Personal.",
+  "query": "what's in the work one",
+  "tools": [
+   "list_onenote_sections"
+  ]
+ },
+ {
+  "id": "f2-039",
+  "prev_user": "do I have Gideon Shaw as a contact?",
+  "prev_assistant": "Yes - Gideon Shaw, gideon@example.com, Sales Director at Brightline.",
+  "query": "update his title to VP Sales",
+  "tools": [
+   "update_contact"
+  ]
+ },
+ {
+  "id": "f2-040",
+  "prev_user": "who emailed me about the Alder Bank deal?",
+  "prev_assistant": "Sienna Moretti (sienna.moretti@example.com) emailed this morning about the term sheet.",
+  "query": "add her as a contact",
+  "tools": [
+   "create_contact"
+  ]
+ },
+ {
+  "id": "f2-041",
+  "prev_user": "is Rohan free at 3",
+  "prev_assistant": "Rohan (rohan.mehta@example.com) is busy until 3:30 today.",
+  "query": "whats his status right now",
+  "tools": [
+   "get_user_presence"
+  ]
+ },
+ {
+  "id": "f2-042",
+  "prev_user": "is Rohan online",
+  "prev_assistant": "Rohan (rohan.mehta@example.com) shows Available.",
+  "query": "message him then, ask if he has 5 min",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "f2-043",
+  "prev_user": "what sheets are in budget.xlsx",
+  "prev_assistant": "Sheets: Summary, Marketing, Ops.",
+  "query": "read the Marketing one",
+  "tools": [
+   "read_excel_range"
+  ]
+ },
+ {
+  "id": "f2-044",
+  "prev_user": "show me the Expenses table in expenses.xlsx",
+  "prev_assistant": "Expenses table columns: Date, Vendor, Amount. 14 rows, latest 10/12 Uber 34.50.",
+  "query": "add one more: 10/13, Lyft, 22.10",
+  "tools": [
+   "add_excel_row"
+  ]
+ },
+ {
+  "id": "f2-045",
+  "prev_user": "show me the Expenses table in expenses.xlsx",
+  "prev_assistant": "Expenses table: A1:C15, Amount in column C, rows 2-15.",
+  "query": "put the total in C16",
+  "tools": [
+   "write_excel_range"
+  ]
+ },
+ {
+  "id": "f2-046",
+  "prev_user": "whats the TaxRate name in pricing.xlsx",
+  "prev_assistant": "TaxRate = 0.0875.",
+  "query": "and what about Margin",
+  "tools": [
+   "read_excel_named_range"
+  ]
+ },
+ {
+  "id": "f2-047",
+  "prev_user": "remind me to send the timesheet",
+  "prev_assistant": "I can set a one-time reminder or make it a weekly recurring task. Which?",
+  "query": "weekly, every monday 8am",
+  "tools": [
+   "create_scheduled_task"
+  ]
+ },
+ {
+  "id": "f2-048",
+  "prev_user": "whats due today on my list",
+  "prev_assistant": "Due today: Send payroll numbers.",
+  "query": "remind me about it in an hour",
+  "tools": [
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "f2-049",
+  "prev_user": "can you summarize the email from Lorna",
+  "prev_assistant": "Lorna wants the redlined contract back by Friday.",
+  "query": "add that as a todo",
+  "tools": [
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "f2-050",
+  "prev_user": "i like bullet points not paragraphs",
+  "prev_assistant": "Got it - I'll keep that in mind for this conversation.",
+  "query": "remember that for good",
+  "tools": [
+   "save_memory"
+  ]
+ },
+ {
+  "id": "f2-051",
+  "prev_user": "give me my morning briefing",
+  "prev_assistant": "This week: 6 meetings, 4 unread incl. 1 urgent from Carlos Ruiz (Audit deadline), 3 open tasks.",
+  "query": "reply to Carlos that I'll have it thursday",
+  "tools": [
+   "reply_to_mail"
+  ],
+  "alt_map": {
+   "reply_to_mail": [
+    "search_mail"
+   ]
+  }
+ },
+ {
+  "id": "f2-052",
+  "prev_user": "give me my morning briefing",
+  "prev_assistant": "This week: 6 meetings, 4 unread incl. 1 urgent from Carlos Ruiz (Audit deadline), 3 open tasks.",
+  "query": "what about next week?",
+  "tools": [
+   "get_calendar_events"
+  ]
+ },
+ {
+  "id": "f2-053",
+  "prev_user": "find emails about the Ardent quote",
+  "prev_assistant": "No emails matched 'Ardent quote'.",
+  "query": "try searching everywhere",
+  "tools": [
+   "search_across_m365"
+  ]
+ },
+ {
+  "id": "f2-054",
+  "prev_user": "draft a reply to Annika's budget email saying approved",
+  "prev_assistant": "Draft reply to Annika: 'Approved - thanks!' Send it?",
+  "query": "actually forward it to Kofi instead",
+  "tools": [
+   "search_contacts",
+   "forward_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "f2-055",
+  "prev_user": "find the Wexley invoice",
+  "prev_assistant": "Found it: 'Invoice WX-2231' from billing@example.com, Oct 10.",
+  "query": "send it to Priscilla",
+  "tools": [
+   "search_contacts",
+   "forward_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "f2-056",
+  "prev_user": "what sharepoint sites do I have",
+  "prev_assistant": "Sites: 1) HR Hub 2) Legal 3) Ops Portal",
+  "query": "show me the files in the second one",
+  "tools": [
+   "get_sharepoint_files"
+  ]
+ },
+ {
+  "id": "f2-057",
+  "prev_user": "what channels does the Product team have",
+  "prev_assistant": "Channels: General, Releases, Design-crit.",
+  "query": "whats been happening in Releases",
+  "tools": [
+   "get_teams_channel_messages"
+  ]
+ },
+ {
+  "id": "f2-058",
+  "prev_user": "what teams am i in",
+  "prev_assistant": "You're in: Product, Sales, Ops.",
+  "query": "what channels does Sales have",
+  "tools": [
+   "list_team_channels"
+  ]
+ },
+ {
+  "id": "f2-059",
+  "prev_user": "show my recent chats",
+  "prev_assistant": "Recent chats: Imogen Clarke, Leadership group, Event planners.",
+  "query": "read the one with Imogen",
+  "tools": [
+   "get_chat_messages"
+  ]
+ },
+ {
+  "id": "f2-060",
+  "prev_user": "read my chat with Imogen",
+  "prev_assistant": "Imogen: 'Here's the whiteboard from today' [image attached]",
+  "query": "what's in that picture",
+  "tools": [
+   "read_teams_image"
+  ]
+ },
+ {
+  "id": "f2-061",
+  "prev_user": "who in the company works on payroll",
+  "prev_assistant": "Mei Tanaka (mei.tanaka@example.com) - Payroll Specialist.",
+  "query": "is she online?",
+  "tools": [
+   "get_user_presence"
+  ]
+ },
+ {
+  "id": "f2-062",
+  "prev_user": "who do I work with most",
+  "prev_assistant": "Top 3: Callum Reyes, Noor Haddad, Wes Tran (with emails).",
+  "query": "email those three about friday's offsite moving to 1pm",
+  "tools": [
+   "send_mail"
+  ]
+ },
+ {
+  "id": "f2-063",
+  "prev_user": "is Kwame free tomorrow afternoon",
+  "prev_assistant": "Kwame (kwame.boateng@example.com) is free 2-4pm tomorrow.",
+  "query": "book 30 min at 2",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "f2-064",
+  "prev_user": "find a time with Lionel next week",
+  "prev_assistant": "Open slots: Mon 9am, Tue 3pm, Wed 11am.",
+  "query": "none of those work, try the week after",
+  "tools": [
+   "find_meeting_times"
+  ],
+  "alt_map": {
+   "find_meeting_times": [
+    "get_free_busy"
+   ]
+  }
+ },
+ {
+  "id": "f2-065",
+  "prev_user": "schedule a call with Arjun tuesday at 10",
+  "prev_assistant": "Booked 'Call with Arjun', Tue 10-10:30am.",
+  "query": "make it a teams meeting",
+  "tools": [
+   "update_event"
+  ]
+ },
+ {
+  "id": "f2-066",
+  "prev_user": "schedule a call with Arjun tuesday at 10",
+  "prev_assistant": "Booked 'Call with Arjun', Tue 10-10:30am.",
+  "query": "add Callum too",
+  "tools": [
+   "search_contacts",
+   "update_event"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "f2-067",
+  "prev_user": "show the version history of the pricing model",
+  "prev_assistant": "3 versions: Oct 3 (Wes Tran), Oct 8 (Noor Haddad), Oct 12 (you).",
+  "query": "who made the oct 3 one?",
+  "tools": []
+ },
+ {
+  "id": "f2-068",
+  "prev_user": "whats in Projects",
+  "prev_assistant": "Projects contains: Harbor, Bellwether, Old Stuff.",
+  "query": "make a subfolder called 2027 in Harbor",
+  "tools": [
+   "create_folder"
+  ]
+ },
+ {
+  "id": "f2-069",
+  "prev_user": "write up notes from what I just told you",
+  "prev_assistant": "Here are your notes: ... Want me to save that as a file?",
+  "query": "yes, Documents/notes.txt",
+  "tools": [
+   "upload_file"
+  ]
+ },
+ {
+  "id": "f2-070",
+  "prev_user": "can you watch for emails from the CEO",
+  "prev_assistant": "I can set up an automation that fires whenever an email from ceo@example.com arrives and pings you. Want that?",
+  "query": "yes please",
+  "tools": [
+   "save_automation"
+  ]
+ },
+ {
+  "id": "f2-071",
+  "prev_user": "where are my settings",
+  "prev_assistant": "Your permissions and settings live in the Settings tab of the Microclaw app.",
+  "query": "and where do I see reminders",
+  "tools": [
+   "get_my_settings"
+  ]
+ },
+ {
+  "id": "f2-072",
+  "prev_user": "pause my VIP email rule",
+  "prev_assistant": "Paused the VIP email alert.",
+  "query": "what else are you running for me right now?",
+  "tools": [
+   "get_my_automations"
+  ]
+ },
+ {
+  "id": "f2-073",
+  "prev_user": "any new mail from Desmond?",
+  "prev_assistant": "Desmond Achebe asked if lunch Thursday works.",
+  "query": "send him a teams message instead saying yes",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "f2-074",
+  "prev_user": "forward all the receipt emails to ap@example.com",
+  "prev_assistant": "There are 40 receipt emails from the last month. I'll forward each one individually. Proceed?",
+  "query": "yep do all 40 and give me updates as you go",
+  "tools": [
+   "forward_mail",
+   "send_message"
+  ]
+ },
+ {
+  "id": "f2-075",
+  "prev_user": "show me the Orders table in fulfilment.xlsx",
+  "prev_assistant": "Orders table: 22 rows, 3 marked backordered.",
+  "query": "perfect thanks",
+  "tools": []
+ },
+ {
+  "id": "f2-076",
+  "prev_user": "show me my task lists",
+  "prev_assistant": "Lists: Tasks, Work, Groceries.",
+  "query": "whats in groceries",
+  "tools": [
+   "list_todo_tasks"
+  ]
+ },
+ {
+  "id": "f2-077",
+  "prev_user": "what plans does the ops team have",
+  "prev_assistant": "Ops plans: Inventory 2027, Safety Audit.",
+  "query": "show me the tasks on Inventory 2027",
+  "tools": [
+   "list_planner_tasks"
+  ]
+ },
+ {
+  "id": "f2-078",
+  "prev_user": "put a task on the Design team board for logo review",
+  "prev_assistant": "The Design team doesn't have a Planner plan yet. Want me to create one?",
+  "query": "sure call it Brand Refresh",
+  "tools": [
+   "create_planner_plan"
+  ]
+ },
+ {
+  "id": "f2-079",
+  "prev_user": "what's on the general channel today",
+  "prev_assistant": "Harriet posted that the office move is on Oct 30.",
+  "query": "set a reminder the day before",
+  "tools": [
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "f2-080",
+  "prev_user": "anything urgent in my inbox",
+  "prev_assistant": "One urgent: 'Server down' from it-alerts@example.com, 8:12am.",
+  "query": "loop in the ops channel on that",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ }
+]

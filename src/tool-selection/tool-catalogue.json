@@ -1,0 +1,2272 @@
+[
+ {
+  "type": "function",
+  "function": {
+   "name": "get_unread_mail",
+   "description": "Fetch unread emails from the user's inbox. Returns subject, sender, preview, received time, and message_id for each email. Use for 'any new mail?', 'check my inbox', morning briefings, or before replying/flagging. For targeted searches by sender, subject, or date range, use search_mail instead.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "top": {
+      "type": "number",
+      "description": "Max number of emails to return (default 25, increase if user asks for more)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "search_mail",
+   "description": "Search emails using KQL (Keyword Query Language) syntax. Supports powerful queries like: \"from:john subject:report\", \"hasAttachment:true subject:invoice\", \"received:2026-03-01..2026-03-19\", \"body:quarterly review\", \"from:ceo importance:high\". Use this for targeted email searches instead of just listing unread mail.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "KQL search query. Examples: \"from:john\", \"subject:budget received>=2026-03-01\", \"hasAttachment:true\""
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results (default 25)"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_mail_by_category",
+   "description": "List emails tagged with a specific Outlook color category (e.g. \"Follow Up\", \"Red Category\"). Use this instead of search_mail when filtering by category — search_mail KQL does not support category filtering reliably.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "description": "Exact Outlook category name, e.g. \"Follow Up\""
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results (default 25)"
+     }
+    },
+    "required": [
+     "category"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "send_mail",
+   "description": "Compose and SEND a new email immediately. Use when the user says 'send an email to X', 'write an email to Y about Z', or 'email everyone on the project team'. If the user asks for a DRAFT, or to write something for them to review first, use create_draft instead. For replying to a received email (staying in-thread), use reply_to_mail instead. For sending to multiple recipients, pass all addresses in to. To ATTACH a OneDrive file (e.g. \"send Jordan the Q2 report\"): first call search_onedrive to get the file's item_id (and drive_id for SharePoint), then pass them in attachments — the tool downloads + attaches automatically.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "to": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "List of recipient email addresses"
+     },
+     "subject": {
+      "type": "string",
+      "description": "Email subject line"
+     },
+     "body": {
+      "type": "string",
+      "description": "Email body text"
+     },
+     "cc": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "CC recipients (optional)"
+     },
+     "bcc": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "BCC recipients (optional)"
+     },
+     "importance": {
+      "type": "string",
+      "enum": [
+       "low",
+       "normal",
+       "high"
+      ],
+      "description": "Email importance (default: normal)"
+     },
+     "body_content_type": {
+      "type": "string",
+      "enum": [
+       "Text",
+       "HTML"
+      ],
+      "description": "Body content type (default: Text)"
+     },
+     "attachments": {
+      "type": "array",
+      "description": "OneDrive/SharePoint files to attach. Each entry is the file's item_id (and drive_id if from SharePoint) from a search_onedrive result.",
+      "items": {
+       "type": "object",
+       "properties": {
+        "item_id": {
+         "type": "string",
+         "description": "OneDrive item ID from search_onedrive"
+        },
+        "drive_id": {
+         "type": "string",
+         "description": "Drive ID (required for SharePoint files)"
+        }
+       },
+       "required": [
+        "item_id"
+       ]
+      }
+     }
+    },
+    "required": [
+     "to",
+     "subject",
+     "body"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "reply_to_mail",
+   "description": "Reply to an existing email and SEND it immediately, keeping the conversation in-thread. Use when the user says 'reply to that email', 'respond to Sarah's message', 'write back to John about the invoice'. Call get_unread_mail or search_mail first to get the message_id. Always reply in-thread — do NOT use send_mail to respond to a received email. If the user asks for a DRAFT, or to write something for them to review first, use create_draft instead: this tool sends.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "message_id": {
+      "type": "string",
+      "description": "ID of the email message to reply to"
+     },
+     "comment": {
+      "type": "string",
+      "description": "Reply text"
+     },
+     "recipient_email": {
+      "type": "string",
+      "description": "Email address of the recipient (include so it appears in your confirmation)"
+     }
+    },
+    "required": [
+     "message_id",
+     "comment"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_draft",
+   "description": "Save an email to the user's Outlook Drafts folder WITHOUT sending it. Use when the user says 'draft a reply', 'draft an email', 'write something I can review', or 'prepare a response'. To draft a reply in-thread, pass reply_to_message_id (from get_unread_mail or search_mail) and the reply text in body; the recipient and subject come from the original. For a new email, pass to, subject and body. Returns the draft_id; if the user later says 'send it', call send_draft with that id.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "reply_to_message_id": {
+      "type": "string",
+      "description": "ID of the received email to draft a reply to (omit for a new email)"
+     },
+     "to": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Recipient email addresses (new email only)"
+     },
+     "cc": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "CC recipients (new email only, optional)"
+     },
+     "subject": {
+      "type": "string",
+      "description": "Subject line (new email only)"
+     },
+     "body": {
+      "type": "string",
+      "description": "The text of the draft"
+     }
+    },
+    "required": [
+     "body"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "send_draft",
+   "description": "Send a draft saved earlier with create_draft. Use when the user approves a draft: 'send it', 'looks good, send', 'go ahead'. Pass the draft_id from create_draft's result.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "draft_id": {
+      "type": "string",
+      "description": "draft_id returned by create_draft"
+     }
+    },
+    "required": [
+     "draft_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "forward_mail",
+   "description": "Forward an existing email to one or more recipients. Use when the user says 'forward that to X', 'send this email to the team', 'loop in Y on this thread'. Requires the original message_id — get it from get_unread_mail or search_mail first. An optional comment is prepended to the forwarded message.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "message_id": {
+      "type": "string",
+      "description": "ID of the email message to forward"
+     },
+     "to": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Recipient email addresses to forward to"
+     },
+     "comment": {
+      "type": "string",
+      "description": "Optional comment to include with the forwarded email"
+     }
+    },
+    "required": [
+     "message_id",
+     "to"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_mail_flags",
+   "description": "Mark an email as read/unread, flag/unflag it, or set Outlook color categories. Safe to call without user confirmation.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "message_id": {
+      "type": "string",
+      "description": "ID of the email message"
+     },
+     "is_read": {
+      "type": "boolean",
+      "description": "Set to true to mark as read, false for unread"
+     },
+     "flag": {
+      "type": "string",
+      "enum": [
+       "flagged",
+       "notFlagged",
+       "complete"
+      ],
+      "description": "Flag status to set"
+     },
+     "categories": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Outlook color categories to assign, e.g. [\"Follow Up\", \"Red Category\"]. Replaces all existing categories on the message."
+     }
+    },
+    "required": [
+     "message_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_mail_attachments",
+   "description": "List the attachments on an email message. Returns attachment id, name, contentType, and size. Use before read_attachment to get the attachment IDs. Requires message_id from get_unread_mail, search_mail, or get_mail_thread.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "message_id": {
+      "type": "string",
+      "description": "ID of the email message"
+     }
+    },
+    "required": [
+     "message_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_attachment",
+   "description": "Read the content of an email attachment. Supports: images (GPT-4o vision analysis), plain text/CSV (decoded), PDF (text extraction), Word .docx (text extraction). Always call get_mail_attachments first to get the attachment_id.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "message_id": {
+      "type": "string",
+      "description": "ID of the email message"
+     },
+     "attachment_id": {
+      "type": "string",
+      "description": "ID of the specific attachment (from get_mail_attachments)"
+     }
+    },
+    "required": [
+     "message_id",
+     "attachment_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_calendar_events",
+   "description": "Fetch calendar events within a date range. Returns event id, subject, start/end times, location, attendees, and online meeting join link if any. Use for 'what's on my calendar', 'any meetings today', 'what's my week look like', or before creating events to check for conflicts. Default to today + the next few days if no range is specified.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "start": {
+      "type": "string",
+      "description": "Start datetime (ISO 8601)"
+     },
+     "end": {
+      "type": "string",
+      "description": "End datetime (ISO 8601)"
+     }
+    },
+    "required": [
+     "start",
+     "end"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_event",
+   "description": "Create a new calendar event, meeting, or appointment. Use when the user says 'schedule a meeting', 'block time on my calendar', 'set up a call with X'. Set is_online to true to generate a Teams video meeting link. Attendees receive an invitation email. Returns the created event including the join URL if online.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "subject": {
+      "type": "string",
+      "description": "Event title/subject"
+     },
+     "start": {
+      "type": "string",
+      "description": "Start datetime in the user's LOCAL time, as a naive ISO 8601 with NO \"Z\"/offset (e.g. \"2026-03-20T10:00:00\"). Do NOT convert to UTC."
+     },
+     "end": {
+      "type": "string",
+      "description": "End datetime in the user's LOCAL time, naive ISO 8601 with NO \"Z\" (e.g. \"2026-03-20T11:00:00\"). Do NOT convert to UTC."
+     },
+     "time_zone": {
+      "type": "string",
+      "description": "IANA time zone (e.g. \"America/New_York\"). Defaults to the user's own timezone — only set this if the user explicitly names a DIFFERENT zone."
+     },
+     "attendees": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Email addresses of attendees (optional)"
+     },
+     "location": {
+      "type": "string",
+      "description": "Meeting location (room name or address)"
+     },
+     "body": {
+      "type": "string",
+      "description": "Event description / agenda"
+     },
+     "is_online": {
+      "type": "boolean",
+      "description": "Set to true to create a Teams meeting link for this event"
+     }
+    },
+    "required": [
+     "subject",
+     "start",
+     "end"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_event",
+   "description": "Update an existing calendar event (change time, location, add attendees, etc.). Attendees may receive update notifications.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "event_id": {
+      "type": "string",
+      "description": "ID of the event to update"
+     },
+     "subject": {
+      "type": "string",
+      "description": "New event title"
+     },
+     "start": {
+      "type": "string",
+      "description": "New start datetime (ISO 8601)"
+     },
+     "end": {
+      "type": "string",
+      "description": "New end datetime (ISO 8601)"
+     },
+     "time_zone": {
+      "type": "string",
+      "description": "IANA time zone; defaults to the user's own timezone. Pass start/end as the user's LOCAL time (no \"Z\")."
+     },
+     "location": {
+      "type": "string",
+      "description": "New location"
+     },
+     "body": {
+      "type": "string",
+      "description": "New description"
+     },
+     "is_online": {
+      "type": "boolean",
+      "description": "Enable/disable Teams meeting link"
+     },
+     "attendees": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Email addresses of attendees to set on the event (replaces existing list)"
+     }
+    },
+    "required": [
+     "event_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "delete_event",
+   "description": "Delete/cancel a calendar event. Attendees will be notified of the cancellation.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "event_id": {
+      "type": "string",
+      "description": "ID of the event to delete"
+     }
+    },
+    "required": [
+     "event_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "respond_to_event",
+   "description": "Accept, tentatively accept, or decline a calendar event invitation. Use when the user says 'accept that meeting invite', 'decline the 3pm call', 'tentatively accept the team lunch'. Requires the event_id — get it from get_calendar_events first. Sends a response to the organizer.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "event_id": {
+      "type": "string",
+      "description": "ID of the event to respond to"
+     },
+     "response": {
+      "type": "string",
+      "enum": [
+       "accept",
+       "decline",
+       "tentativelyAccept"
+      ],
+      "description": "Response type"
+     },
+     "comment": {
+      "type": "string",
+      "description": "Optional comment to include with the response"
+     }
+    },
+    "required": [
+     "event_id",
+     "response"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "find_meeting_times",
+   "description": "Find available meeting times for a group of attendees. Returns suggested time slots when all (or most) attendees are free. Useful when scheduling a meeting and you need to find a good time.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "attendees": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Email addresses of all attendees"
+     },
+     "duration": {
+      "type": "string",
+      "description": "Meeting duration in ISO 8601 format (e.g. \"PT30M\" for 30 min, \"PT1H\" for 1 hour). Default: PT1H"
+     },
+     "start": {
+      "type": "string",
+      "description": "Start of the search window (ISO 8601). Only look for times after this."
+     },
+     "end": {
+      "type": "string",
+      "description": "End of the search window (ISO 8601). Only look for times before this."
+     },
+     "time_zone": {
+      "type": "string",
+      "description": "Time zone for the constraint window (default: UTC)"
+     }
+    },
+    "required": [
+     "attendees"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_free_busy",
+   "description": "Check the free/busy schedule for one or more people to find meeting availability. Use for \"find a time for me and Priya and Tom\", \"is Sarah free Thursday afternoon?\", \"when is everyone available this week?\". Returns busy blocks for each person in the requested window. Tip: get their email addresses from search_contacts first if you don't already have them.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "emails": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "List of email addresses to check (include the signed-in user's email too if relevant)"
+     },
+     "start_time": {
+      "type": "string",
+      "description": "Start of the window in ISO 8601 format (e.g. \"2026-04-07T09:00:00\")"
+     },
+     "end_time": {
+      "type": "string",
+      "description": "End of the window in ISO 8601 format (e.g. \"2026-04-07T17:00:00\")"
+     },
+     "interval_minutes": {
+      "type": "number",
+      "description": "Slot granularity in minutes (default 30). Use 15 for finer resolution."
+     }
+    },
+    "required": [
+     "emails",
+     "start_time",
+     "end_time"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_teams_channel_messages",
+   "description": "Read recent messages from a Microsoft Teams channel. Returns message content, sender, and timestamp. Use when the user asks 'what's been said in #general', 'catch me up on the engineering channel', 'what did the team say about X in Teams'. Call list_my_teams and list_team_channels first if you don't have the channel ID.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "team_id": {
+      "type": "string",
+      "description": "Teams team ID"
+     },
+     "channel_id": {
+      "type": "string",
+      "description": "Teams channel ID"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max number of messages (default 50)"
+     }
+    },
+    "required": [
+     "team_id",
+     "channel_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_chats",
+   "description": "List the user's Teams chats: 1:1 DMs, group chats, and meeting chats. Returns chat_id, type, topic or member names, and last activity. Call this first to find a chat before reading its messages.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "top": {
+      "type": "number",
+      "description": "Max chats to return (default 20)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_chat_messages",
+   "description": "Read recent messages from a Teams chat (1:1 DM, group chat, or meeting chat). Call list_chats first to get the chat_id.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "chat_id": {
+      "type": "string",
+      "description": "Teams chat ID (from list_chats)"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max messages to return (default 20)"
+     }
+    },
+    "required": [
+     "chat_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_meeting_transcript",
+   "description": "Fetch the full transcript of a recorded Teams meeting. Returns speaker turns with timestamps. Use when the user asks 'what was discussed in the meeting', 'summarize the standup', 'what did Sarah say on the call'. Pass the calendar event_id (from get_calendar_events) — this tool resolves the online meeting and its transcript itself. Only meetings the signed-in user organized, recorded with transcription on, have a transcript.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "event_id": {
+      "type": "string",
+      "description": "Calendar event id from get_calendar_events (the event that has the online meeting). Not the meeting title."
+     }
+    },
+    "required": [
+     "event_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "send_teams_channel_message",
+   "description": "Post a message to a Microsoft Teams channel, visible to all channel members. Use when the user says 'post to the team', 'send a message to #general', 'announce X in the engineering channel'. Call list_my_teams and list_team_channels first to get team_id and channel_id. For 1:1 or group DMs, use send_teams_chat_message instead.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "team_id": {
+      "type": "string",
+      "description": "Teams team ID"
+     },
+     "channel_id": {
+      "type": "string",
+      "description": "Teams channel ID"
+     },
+     "content": {
+      "type": "string",
+      "description": "Message content to post"
+     },
+     "content_type": {
+      "type": "string",
+      "enum": [
+       "text",
+       "html"
+      ],
+      "description": "Content type (default: text)"
+     }
+    },
+    "required": [
+     "team_id",
+     "channel_id",
+     "content"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "send_teams_chat_message",
+   "description": "Send a message in a Teams 1:1 DM or group chat. Use when the user says 'message Sarah directly', 'send a DM to X', 'write in the group chat'. Call list_chats first to get the chat_id. For posting to a channel (not a DM), use send_teams_channel_message instead.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "chat_id": {
+      "type": "string",
+      "description": "Teams chat ID (1:1 or group chat)"
+     },
+     "content": {
+      "type": "string",
+      "description": "Message content to send"
+     },
+     "content_type": {
+      "type": "string",
+      "enum": [
+       "text",
+       "html"
+      ],
+      "description": "Content type (default: text)"
+     }
+    },
+    "required": [
+     "chat_id",
+     "content"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_teams_image",
+   "description": "Download and analyze an image shared in a Teams message using GPT-4o vision. Use when a Teams message contains an image and the user asks what it shows. The content_url comes from the attachments array in a Teams message (from get_chat_messages or get_teams_channel_messages). Only works for hosted content URLs (graph.microsoft.com paths) — not external image links.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "content_url": {
+      "type": "string",
+      "description": "The hosted content URL from the Teams message attachment (e.g. /teams/.../hostedContents/.../$value)"
+     },
+     "content_type": {
+      "type": "string",
+      "description": "MIME type of the image (e.g. image/jpeg, image/png). Defaults to image/jpeg if unknown."
+     }
+    },
+    "required": [
+     "content_url"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_sharepoint_files",
+   "description": "List files in a SharePoint document library. Returns id and driveId for each file — pass both to read_onedrive_file to read file content. Provide group_id (Teams group) OR site_id (from list_sharepoint_sites). drive_id is optional — auto-discovered if omitted.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "group_id": {
+      "type": "string",
+      "description": "Microsoft 365 group ID (Teams team ID) — auto-discovers site and drive"
+     },
+     "site_id": {
+      "type": "string",
+      "description": "SharePoint site ID as returned by list_sharepoint_sites — drive auto-discovered"
+     },
+     "drive_id": {
+      "type": "string",
+      "description": "Document library drive ID (optional — auto-discovered if omitted)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_sharepoint_sites",
+   "description": "List SharePoint sites the user has access to via their group memberships. Returns id, name, webUrl for each site. Pass the returned id as site_id to get_sharepoint_files to browse that site's files.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_file_versions",
+   "description": "List version history for a file in OneDrive or SharePoint. Returns each saved version with its date, size, and who modified it. Use when the user asks to see version history, restore a previous version, or find out what changed.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "OneDrive or SharePoint file item ID"
+     }
+    },
+    "required": [
+     "item_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_file_permissions",
+   "description": "Get the list of people and links that have access to a file in OneDrive or SharePoint. Use when the user asks who can see a file, who has access, or to audit sharing.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "OneDrive or SharePoint file item ID"
+     }
+    },
+    "required": [
+     "item_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_contacts",
+   "description": "List all contacts from the user's Outlook address book, sorted alphabetically. Returns display name, email, phone, company, and job title. Use for browsing contacts or before creating/updating one. For finding a specific person by name, use search_contacts instead.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "top": {
+      "type": "number",
+      "description": "Max number of contacts to return (default 25)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "search_contacts",
+   "description": "Search the user's Outlook contacts by name or email prefix. Returns matching contacts with email, phone, and job title. Use when you need someone's email address, or when the user asks 'do I have a contact for X'. Faster than list_contacts for looking up a specific person.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Search term — matches the beginning of display name or email address"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results (default 10)"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_contact",
+   "description": "Create a new contact in a user's address book. At minimum provide a display name or given/surname.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "display_name": {
+      "type": "string",
+      "description": "Full display name"
+     },
+     "given_name": {
+      "type": "string",
+      "description": "First name"
+     },
+     "surname": {
+      "type": "string",
+      "description": "Last name"
+     },
+     "email_addresses": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Email addresses for the contact"
+     },
+     "mobile_phone": {
+      "type": "string",
+      "description": "Mobile phone number"
+     },
+     "business_phones": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Business phone numbers"
+     },
+     "job_title": {
+      "type": "string",
+      "description": "Job title"
+     },
+     "company_name": {
+      "type": "string",
+      "description": "Company name"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_contact",
+   "description": "Update an existing contact in a user's address book. Use search_contacts first to find the contact ID. Only fields you provide are changed — others are left as-is.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "contact_id": {
+      "type": "string",
+      "description": "The contact ID to update (from search_contacts or list_contacts)"
+     },
+     "display_name": {
+      "type": "string",
+      "description": "Full display name"
+     },
+     "given_name": {
+      "type": "string",
+      "description": "First name"
+     },
+     "surname": {
+      "type": "string",
+      "description": "Last name"
+     },
+     "email_addresses": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Email addresses for the contact"
+     },
+     "mobile_phone": {
+      "type": "string",
+      "description": "Mobile phone number"
+     },
+     "business_phones": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Business phone numbers"
+     },
+     "job_title": {
+      "type": "string",
+      "description": "Job title"
+     },
+     "company_name": {
+      "type": "string",
+      "description": "Company name"
+     }
+    },
+    "required": [
+     "contact_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_todo_task_lists",
+   "description": "List all Microsoft To Do task lists (e.g. 'Tasks', 'Work', 'Shopping', custom lists). Returns list IDs and names. Call this first to discover list IDs before calling list_todo_tasks, or when the user asks 'what task lists do I have?'. Required before creating a task in a named list.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_todo_tasks",
+   "description": "List tasks in a Microsoft To Do task list. Returns task title, status (notStarted/inProgress/completed), due date, importance, and task_id. Use for 'what tasks do I have?', 'show my to-do list', or before updating/deleting a task to get the task_id. Call list_todo_task_lists first to get the list_id if needed.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "task_list_id": {
+      "type": "string",
+      "description": "ID of the To Do task list"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max tasks to return (default 50)"
+     }
+    },
+    "required": [
+     "task_list_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_my_teams",
+   "description": "List all Microsoft Teams the current user is a member of. Returns team names and group IDs needed for Planner, SharePoint, and channel tools.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_team_channels",
+   "description": "List all channels in a Microsoft Teams team. Use this after list_my_teams to find the channel ID needed for reading or posting to a specific channel.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "team_id": {
+      "type": "string",
+      "description": "Teams team ID (from list_my_teams)"
+     }
+    },
+    "required": [
+     "team_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_planner_plans",
+   "description": "List Planner plans for a Microsoft 365 group (team). Use a team/group ID to discover available plans.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "group_id": {
+      "type": "string",
+      "description": "Microsoft 365 group ID (same as Teams team ID)"
+     }
+    },
+    "required": [
+     "group_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_planner_tasks",
+   "description": "List tasks in a Planner plan. Call list_planner_plans first to get plan IDs. Returns task titles, completion percentage, priority, and due dates.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "plan_id": {
+      "type": "string",
+      "description": "Planner plan ID"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max tasks to return (default 50)"
+     }
+    },
+    "required": [
+     "plan_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_todo_task",
+   "description": "Create a new personal task in Microsoft To Do. Use this for individual tasks, personal follow-ups, reminders, and work items that belong to the user alone — e.g. 'add a task to call the dentist', 'remind me to review the proposal', 'create a task: follow up with Sarah'. This is the DEFAULT for all task creation unless the request involves a team board, Planner plan, sprint, or assigning to another person. list_id is optional — omit to use the default list automatically.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "list_id": {
+      "type": "string",
+      "description": "ID of the To Do task list. Omit to use the default list automatically."
+     },
+     "title": {
+      "type": "string",
+      "description": "Task title"
+     },
+     "due_date": {
+      "type": "string",
+      "description": "Due date (ISO 8601, e.g. \"2026-03-25T00:00:00\")"
+     },
+     "importance": {
+      "type": "string",
+      "enum": [
+       "low",
+       "normal",
+       "high"
+      ],
+      "description": "Task importance (default: normal)"
+     },
+     "reminder_datetime": {
+      "type": "string",
+      "description": "When to remind the user (ISO 8601). Sets a push notification via Microsoft To Do/Outlook."
+     },
+     "body": {
+      "type": "string",
+      "description": "Task notes / description"
+     }
+    },
+    "required": [
+     "title"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_todo_task",
+   "description": "Update an existing Microsoft To Do task (change title, status, due date, importance, or body).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "list_id": {
+      "type": "string",
+      "description": "ID of the To Do task list"
+     },
+     "task_id": {
+      "type": "string",
+      "description": "ID of the task to update"
+     },
+     "title": {
+      "type": "string",
+      "description": "New task title"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "notStarted",
+       "inProgress",
+       "completed",
+       "waitingOnOthers",
+       "deferred"
+      ],
+      "description": "New task status"
+     },
+     "importance": {
+      "type": "string",
+      "enum": [
+       "low",
+       "normal",
+       "high"
+      ],
+      "description": "New importance level"
+     },
+     "due_date": {
+      "type": "string",
+      "description": "New due date (ISO 8601)"
+     },
+     "body": {
+      "type": "string",
+      "description": "Updated task notes"
+     }
+    },
+    "required": [
+     "list_id",
+     "task_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "delete_todo_task",
+   "description": "Permanently delete a task from Microsoft To Do. Use when the user says 'delete that task', 'remove it from my list', 'scratch that task'. Requires list_id and task_id — call list_todo_tasks first to get them. Cannot be undone. To complete a task instead of deleting, use update_todo_task with status='completed'.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "list_id": {
+      "type": "string",
+      "description": "ID of the To Do task list"
+     },
+     "task_id": {
+      "type": "string",
+      "description": "ID of the task to delete"
+     }
+    },
+    "required": [
+     "list_id",
+     "task_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_planner_plan",
+   "description": "Create a new Planner board (plan) for a Microsoft 365 group (team). Only needed if no plan exists yet.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "group_id": {
+      "type": "string",
+      "description": "Microsoft 365 group ID (Teams team ID)"
+     },
+     "title": {
+      "type": "string",
+      "description": "Plan title"
+     }
+    },
+    "required": [
+     "group_id",
+     "title"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_planner_task",
+   "description": "Create a task on a Microsoft Planner board (team task board). Use this ONLY when: the request explicitly names a Planner plan or board ('add to the sprint board', 'add to the Q2 plan', 'put on the engineering board'), OR the task is being assigned to another person ('assign this to John', 'for Sarah to complete'), OR the user says 'team task' or 'project board'. For all other task creation, use create_todo_task. Call list_my_teams then list_planner_plans first to get the plan_id.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "plan_id": {
+      "type": "string",
+      "description": "Planner plan ID"
+     },
+     "title": {
+      "type": "string",
+      "description": "Task title"
+     },
+     "bucket_id": {
+      "type": "string",
+      "description": "Bucket ID to place the task in (optional)"
+     },
+     "due_date": {
+      "type": "string",
+      "description": "Due date (ISO 8601)"
+     },
+     "priority": {
+      "type": "number",
+      "description": "Priority: 1 = Urgent, 3 = Important, 5 = Medium, 9 = Low"
+     },
+     "assignments": {
+      "type": "object",
+      "description": "Assignments object — keys are user IDs, values are { \"@odata.type\": \"#microsoft.graph.plannerAssignment\", \"orderHint\": \" !\" }"
+     }
+    },
+    "required": [
+     "plan_id",
+     "title"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_planner_task",
+   "description": "Update an existing Planner task (change title, completion, priority, dates, or bucket). Etag is handled automatically.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "task_id": {
+      "type": "string",
+      "description": "Planner task ID"
+     },
+     "title": {
+      "type": "string",
+      "description": "New task title"
+     },
+     "percent_complete": {
+      "type": "number",
+      "description": "Completion percentage (0-100)"
+     },
+     "priority": {
+      "type": "number",
+      "description": "Priority: 1=Urgent, 3=Important, 5=Medium, 9=Low"
+     },
+     "due_date": {
+      "type": "string",
+      "description": "New due date (ISO 8601)"
+     },
+     "start_date": {
+      "type": "string",
+      "description": "New start date (ISO 8601)"
+     },
+     "bucket_id": {
+      "type": "string",
+      "description": "Move task to a different bucket"
+     }
+    },
+    "required": [
+     "task_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_onenote_notebooks",
+   "description": "List the user's OneNote notebooks, sorted by most recently modified. Returns notebook IDs and names. Call this first when the user asks about notes or wants to find something in OneNote. Follow with list_onenote_sections to go deeper.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_onenote_sections",
+   "description": "List sections in a OneNote notebook. Call list_onenote_notebooks first to get notebook IDs.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "notebook_id": {
+      "type": "string",
+      "description": "OneNote notebook ID"
+     }
+    },
+    "required": [
+     "notebook_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_onenote_pages",
+   "description": "List pages in a OneNote section, sorted by most recently modified. Call list_onenote_sections first to get section IDs.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "section_id": {
+      "type": "string",
+      "description": "OneNote section ID"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max pages to return (default 25)"
+     }
+    },
+    "required": [
+     "section_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_onenote_page_content",
+   "description": "Get the HTML content of a specific OneNote notebook page. Only for pages in OneNote — NOT for .txt or .docx files on OneDrive/SharePoint (use read_onedrive_file for those). Call list_onenote_pages first to get page IDs.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "page_id": {
+      "type": "string",
+      "description": "OneNote page ID"
+     }
+    },
+    "required": [
+     "page_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "search_onedrive",
+   "description": "Find a file or document in OneDrive or SharePoint by name or keyword — e.g. 'find my Q3 budget', 'where is the contract doc', 'locate the design spec'. Use this whenever the user asks to find, locate, or search for a file. Returns metadata (id, name, webUrl) — NOT file content. To read a file's content after finding it, call read_onedrive_file with the item's id.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Search query — matches file names and indexed content"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results (default 25)"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_onedrive_item",
+   "description": "Get metadata for a specific file or folder in a user's OneDrive by its path (e.g. 'Documents/report.docx')",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Path relative to the OneDrive root (e.g. \"Documents/report.docx\")"
+     }
+    },
+    "required": [
+     "path"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_onedrive_file",
+   "description": "Read the text content of a OneDrive or SharePoint file. ONLY for plain-text formats: .txt, .md, .csv, .json, .log. Do NOT use for .xlsx — use read_excel_range instead. Do NOT use for .docx, .pdf, .pptx — they need format-specific tools. Do NOT use for OneNote pages — use get_onenote_page_content with the page_id from list_onenote_pages. Use item_id from search_onedrive results. For SharePoint files, also pass drive_id from the same search result. Alternatively, use path (e.g. 'Documents/report.txt') for personal OneDrive files.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "File item ID (from search_onedrive or list_onedrive_children results). Preferred when available."
+     },
+     "drive_id": {
+      "type": "string",
+      "description": "Drive ID from the search_onedrive result's driveId field. Required for SharePoint files; omit for personal OneDrive files."
+     },
+     "path": {
+      "type": "string",
+      "description": "File path relative to OneDrive root, e.g. 'Documents/notes.txt'. Use if item_id is unknown (personal OneDrive only)."
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_onedrive_children",
+   "description": "List files and folders in a user's OneDrive. Omit all optional params to list root. Use folder_path (e.g. 'Documents') to browse a named folder — preferred over folder_id. Use folder_id only if you have the actual item ID from a previous result.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "folder_path": {
+      "type": "string",
+      "description": "Folder name or path relative to OneDrive root, e.g. 'Documents', 'Documents/Reports'. Preferred — use this to browse named folders."
+     },
+     "folder_id": {
+      "type": "string",
+      "description": "OneDrive folder item ID (only use if you have the actual ID from a prior tool result, not a folder name)."
+     },
+     "top": {
+      "type": "number",
+      "description": "Max items to return (default 50)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "upload_file",
+   "description": "Upload a file to a user's OneDrive (or SharePoint via OneDrive). For files up to 4 MB. Provide the file path (e.g. \"Documents/report.txt\") and content as text.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Destination path in OneDrive (e.g. \"Documents/notes.txt\")"
+     },
+     "content": {
+      "type": "string",
+      "description": "File content as text"
+     }
+    },
+    "required": [
+     "path",
+     "content"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_sharing_link",
+   "description": "Create a sharing link for a file or folder in OneDrive/SharePoint. Returns a URL that can be shared with others.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "OneDrive item ID (file or folder)"
+     },
+     "type": {
+      "type": "string",
+      "enum": [
+       "view",
+       "edit"
+      ],
+      "description": "Link type — view (read-only) or edit (default: view)"
+     },
+     "scope": {
+      "type": "string",
+      "enum": [
+       "anonymous",
+       "organization"
+      ],
+      "description": "Link scope — anonymous (anyone) or organization (org members only, default: organization)"
+     }
+    },
+    "required": [
+     "item_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_folder",
+   "description": "Create a new folder in the user's OneDrive. Use when asked to \"make a folder\", \"create a directory\", or \"set up a folder for X\". parent_path is optional — leave empty to create at root, or set to a path like \"Documents/Projects\" to nest it.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "Name of the new folder"
+     },
+     "parent_path": {
+      "type": "string",
+      "description": "Path of the parent folder relative to root (e.g. \"Documents/Reports\"). Leave empty to create at root."
+     }
+    },
+    "required": [
+     "name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "move_item",
+   "description": "Move a file or folder in OneDrive to a different parent folder. Use when asked to \"move X to Y folder\". Requires item_id (from search_onedrive or list_onedrive_children) and new_parent_id (the destination folder's id — look it up first if needed).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "ID of the file or folder to move"
+     },
+     "new_parent_id": {
+      "type": "string",
+      "description": "ID of the destination folder"
+     }
+    },
+    "required": [
+     "item_id",
+     "new_parent_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "rename_item",
+   "description": "Rename a file or folder in OneDrive. Use when asked to \"rename X to Y\" or \"change the name of X\". Requires item_id (from search_onedrive or list_onedrive_children) and the new name.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "ID of the file or folder to rename"
+     },
+     "new_name": {
+      "type": "string",
+      "description": "New name (including extension for files, e.g. \"Report_Final.docx\")"
+     }
+    },
+    "required": [
+     "item_id",
+     "new_name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "delete_drive_item",
+   "description": "Permanently delete a file or folder from OneDrive. IMPORTANT: This is irreversible — always confirm with the user before calling this tool unless they have already confirmed. Requires item_id from search_onedrive or list_onedrive_children.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "item_id": {
+      "type": "string",
+      "description": "ID of the file or folder to delete"
+     }
+    },
+    "required": [
+     "item_id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_excel_sheets",
+   "description": "List all worksheets in an Excel (.xlsx) workbook on OneDrive or SharePoint. Returns sheet names and positions. Use before read_excel_range or read_excel_table when the sheet name is unknown. file_name is a partial or full filename — the tool searches OneDrive automatically.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file (e.g. \"Budget\" or \"Budget.xlsx\")"
+     }
+    },
+    "required": [
+     "file_name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_excel_range",
+   "description": "Read cell data from an Excel workbook. Returns a formatted table of values. If range is omitted, reads all used cells on the sheet (usedRange). If sheet is omitted, reads the first sheet. Use list_excel_sheets first if the sheet name is unknown. Prefer this over downloading the file — it reads live data directly via the Graph API. file_name is searched automatically in OneDrive.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file (e.g. \"Budget\" or \"Q1 Sales.xlsx\")"
+     },
+     "sheet": {
+      "type": "string",
+      "description": "Worksheet name (e.g. \"Sheet1\", \"Q1 Data\"). Defaults to first sheet."
+     },
+     "range": {
+      "type": "string",
+      "description": "Cell range in A1 notation (e.g. \"A1:D20\"). Omit to read all used cells."
+     }
+    },
+    "required": [
+     "file_name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_excel_table",
+   "description": "Read all rows from a named Excel table, including column headers. Returns a formatted table with the correct column names. Use when the workbook has a structured table (Insert > Table in Excel). For raw cell ranges without a table, use read_excel_range instead. file_name is searched automatically in OneDrive.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file"
+     },
+     "table_name": {
+      "type": "string",
+      "description": "Name of the table in the workbook (e.g. \"Table1\", \"SalesData\")"
+     }
+    },
+    "required": [
+     "file_name",
+     "table_name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "read_excel_named_range",
+   "description": "Read a named range or named constant from an Excel workbook. Named ranges are cells given a label in Excel (Formulas > Name Manager). Returns the cell values for range names, or the constant value for scalar names. file_name is searched automatically in OneDrive.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file"
+     },
+     "name": {
+      "type": "string",
+      "description": "The named range or named constant (e.g. \"TotalRevenue\", \"Q1SalesData\")"
+     }
+    },
+    "required": [
+     "file_name",
+     "name"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "write_excel_range",
+   "description": "Write values or formulas to a cell range in an Excel workbook. values is a 2D JSON array (rows × columns) of strings, numbers, or booleans. formulas is a 2D JSON array of formula strings starting with \"=\" (e.g. [[\"=SUM(A1:A10)\"]]). Provide values OR formulas — not both. range must be a bounded A1 address matching the array dimensions (e.g. \"B2:D4\" for a 3×3 array). IMPORTANT: Always confirm with the user before overwriting existing data. file_name is searched automatically in OneDrive.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file"
+     },
+     "sheet": {
+      "type": "string",
+      "description": "Worksheet name (e.g. \"Sheet1\")"
+     },
+     "range": {
+      "type": "string",
+      "description": "Target cell range in A1 notation (e.g. \"A1:C3\"). Must be bounded."
+     },
+     "values": {
+      "type": "string",
+      "description": "JSON-encoded 2D array of values, e.g. '[[\"Name\",\"Score\"],[\"Alice\",95]]'. Use this for plain data."
+     },
+     "formulas": {
+      "type": "string",
+      "description": "JSON-encoded 2D array of formula strings, e.g. '[[\"=SUM(A1:A10)\"]]'. Use this for formulas."
+     }
+    },
+    "required": [
+     "file_name",
+     "sheet",
+     "range"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "add_excel_row",
+   "description": "Append a new row to a named Excel table. values is a JSON array of cell values in column order matching the table headers. Use read_excel_table first to confirm the column order. IMPORTANT: Always confirm the values with the user before writing. file_name is searched automatically in OneDrive.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "file_name": {
+      "type": "string",
+      "description": "Name of the Excel file"
+     },
+     "table_name": {
+      "type": "string",
+      "description": "Name of the table to append to (e.g. \"Expenses\", \"Table1\")"
+     },
+     "values": {
+      "type": "string",
+      "description": "JSON-encoded array of values in column order, e.g. '[\"March\",\"Travel\",450]'"
+     }
+    },
+    "required": [
+     "file_name",
+     "table_name",
+     "values"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_relevant_people",
+   "description": "Get people most relevant to a user, ranked by relationship strength (based on communication, collaboration, and org proximity). Useful for finding colleagues the user works with most.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "top": {
+      "type": "number",
+      "description": "Max people to return (default 25)"
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "search_people",
+   "description": "Search for people relevant to a user by name or topic (e.g. 'marketing' finds people in marketing). Uses Graph's relationship intelligence.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Search term — name, email, topic, or department"
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results (default 10)"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_user_presence",
+   "description": "Get a user's current presence status in Microsoft Teams (e.g. Available, Busy, Away, DoNotDisturb, Offline). Omit user_id or pass \"me\" for the signed-in user's own status. For another user, pass their UPN (email address, e.g. tom@company.com) — NOT a contact ID.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "user_id": {
+      "type": "string",
+      "description": "Optional. UPN (email address) of the user to check, e.g. \"tom@company.com\". Omit or pass \"me\" for own presence."
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "search_across_m365",
+   "description": "Search across multiple Microsoft 365 resources in a single call. Searches messages (emails), driveItems (files), events (calendar), and chatMessages (Teams chats) simultaneously. Use this when the user wants to find something but is not sure where it is, or when searching broadly across mail, files, and calendar.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Search query string"
+     },
+     "entity_types": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Resource types to search. Options: \"message\", \"driveItem\", \"event\", \"chatMessage\", \"list\", \"listItem\", \"site\". Defaults to [\"message\", \"driveItem\", \"event\"]."
+     },
+     "top": {
+      "type": "number",
+      "description": "Max results per entity type (default 25)"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "save_automation",
+   "description": "Save a natural-language rule that fires automatically when a trigger event occurs. Use when the user says \"whenever X happens, do Y\", \"every time I get an email from X\", \"automatically do Y when Z\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "Short descriptive name for the rule (e.g. \"Email from Bridge Capital → Teams card\")"
+     },
+     "instruction": {
+      "type": "string",
+      "description": "The full natural-language instruction to run when the trigger fires (e.g. \"Send me a Teams card summarizing the email\")"
+     },
+     "trigger_type": {
+      "type": "string",
+      "enum": [
+       "new_mail",
+       "calendar_change",
+       "before_meeting",
+       "teams_message",
+       "teams_chat_message",
+       "todo_task",
+       "task_assigned",
+       "contact_change",
+       "file_change",
+       "meeting_transcript",
+       "any"
+      ],
+      "description": "When to trigger: new_mail (email received), calendar_change (calendar event created/updated/deleted), before_meeting (15 min before any meeting starts), teams_message (new Teams channel message), teams_chat_message (new Teams DM or group chat message), todo_task (To Do task created/updated/deleted), task_assigned (Planner task assigned or updated), contact_change (contact created/updated/deleted), file_change (OneDrive file changed), meeting_transcript (meeting transcript ready), any (all events)"
+     }
+    },
+    "required": [
+     "name",
+     "instruction",
+     "trigger_type"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_automations",
+   "description": "List all saved if-this-then-that automation rules (both active and paused). Use when the user asks \"what automations do you have?\", \"show my rules\", \"list my saved automations\".",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "pause_automation",
+   "description": "Pause (disable) a saved automation rule by ID so it stops firing but can be resumed later. If you do not know the ID, call list_automations first to find it. Use when the user says \"pause that automation\", \"turn off the email automation\", \"disable it\", \"stop it for now\". NOT for \"cancel\" or \"delete\" — use delete_automation for permanent removal.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the automation to pause"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "enable_automation",
+   "description": "Resume a paused automation rule by ID so it starts firing again. If you do not know the ID, call list_automations first to find it. Use when the user says \"resume that automation\", \"turn that rule back on\", \"re-enable the email automation\", \"unpause it\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the automation to re-enable"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "delete_automation",
+   "description": "Permanently delete an automation rule by ID. If you do not know the ID, call list_automations first to find it. Use when the user says \"delete that automation\", \"cancel that automation\", \"remove that rule\", \"get rid of it\", \"cancel all my automations\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the automation to delete permanently"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "update_automation",
+   "description": "Modify an existing automation rule — rename it, change its instruction, or change its trigger type. If you do not know the ID, call list_automations first to find it. Use when the user says \"update that automation\", \"change the rule to...\", \"modify the trigger\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the automation to update"
+     },
+     "name": {
+      "type": "string",
+      "description": "New name for the automation (optional)"
+     },
+     "instruction": {
+      "type": "string",
+      "description": "New instruction/action for the automation (optional)"
+     },
+     "trigger_type": {
+      "type": "string",
+      "description": "New trigger type: new_mail, calendar_change, before_meeting, teams_message, teams_chat_message, todo_task, task_assigned, contact_change, file_change, meeting_transcript, any (optional)"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "create_scheduled_task",
+   "description": "Create a recurring scheduled task that fires on a cron schedule (e.g. every Monday at 9am). Use for time-based recurring actions like \"every Monday\", \"every weekday at 8am\", \"daily at noon\". For one-time reminders use set_reminder. For event-driven rules (email arrives, calendar changes) use save_automation.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "Short descriptive name for the task (e.g. \"Weekly Planner Review\")"
+     },
+     "prompt": {
+      "type": "string",
+      "description": "The instruction to run when the schedule fires (e.g. \"Send me a message reminding me to review my Planner board\")"
+     },
+     "cron": {
+      "type": "string",
+      "description": "A standard cron expression (5 fields: min hour day month weekday). Examples: \"0 9 * * 1\" for every Monday at 9am, \"0 8 * * 1-5\" for weekdays at 8am."
+     }
+    },
+    "required": [
+     "name",
+     "prompt",
+     "cron"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "list_scheduled_tasks",
+   "description": "List all scheduled tasks (active and paused). Use when the user asks \"what scheduled tasks do I have?\", \"show my scheduled tasks\", or before cancelling/pausing/resuming a task by name.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "cancel_scheduled_task",
+   "description": "Permanently cancel a scheduled task by ID. If you do not know the ID, call list_scheduled_tasks first. Use when the user says \"cancel that task\", \"delete the cheese task\", \"remove the scheduled reminder\". Use pause_scheduled_task instead if the user just wants to pause it temporarily.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the scheduled task to cancel"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "pause_scheduled_task",
+   "description": "Pause a scheduled task so it stops running temporarily. Use when the user says \"pause that task\", \"pause the cheese task\", \"stop running the Monday briefing for now\". The task can be resumed later. Use cancel_scheduled_task only when the user wants to permanently delete it.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the scheduled task to pause"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "resume_scheduled_task",
+   "description": "Resume a previously paused scheduled task. Use when the user says \"resume that task\", \"turn the cheese task back on\", \"restart the Monday briefing\". If you do not know the ID, call list_scheduled_tasks first.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string",
+      "description": "The ID of the scheduled task to resume"
+     }
+    },
+    "required": [
+     "id"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "generate_daily_briefing",
+   "description": "Generate a comprehensive briefing for a user. Pulls the next 7 days of calendar events, unread mail count and top urgent emails, and recent To Do tasks into a single structured summary. Use this for morning briefings, weekly briefings, or \"catch me up\" requests.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_usage_report",
+   "description": "Get token usage and estimated cost report for the AI assistant. Shows total prompt tokens, completion tokens, estimated cost in USD, and number of API calls. Use this when the user asks about costs, usage, spending, or \"how much has this cost\".",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "since": {
+      "type": "string",
+      "description": "ISO 8601 date to start counting from (e.g. \"2026-03-01T00:00:00Z\"). Omit for all-time usage."
+     }
+    },
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "set_reminder",
+   "description": "Set a reminder that fires as a message in this conversation at the specified time. Accepts ISO 8601 datetime or relative expressions like \"in 2 hours\", \"in 30 minutes\", \"tomorrow at 9am\". The reminder fires directly in Teams — no app switching needed.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "reminder_text": {
+      "type": "string",
+      "description": "What to remind the user about (becomes the task title)"
+     },
+     "remind_at": {
+      "type": "string",
+      "description": "When to send the reminder, in the USER'S LOCAL time — do NOT convert to UTC. Use natural language (\"today at 8am\", \"tomorrow at 9am\", \"in 2 hours\", \"in 30 minutes\") or a LOCAL ISO time with NO \"Z\"/offset (e.g. \"2026-03-20T14:00\"). The user's timezone is applied automatically. Only add a \"Z\" or offset if the user explicitly gave a UTC/absolute time."
+     }
+    },
+    "required": [
+     "reminder_text",
+     "remind_at"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_my_settings",
+   "description": "Use when the user asks where to find or manage their settings, permissions, automations, reminders, or asks \"what can you do\" / \"where is X\". Returns where each of those lives in the Microclaw Teams app. Point the user to the specific tab named in the result; never invent links or reference Microsoft portals.",
+   "parameters": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "send_message",
+   "description": "Send a message to the user while still working on a longer task. Use this to provide progress updates or partial results mid-task, before your final response. For example: \"I found 12 unread emails — scanning for urgent ones now.\"",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "text": {
+      "type": "string",
+      "description": "The message to send to the user"
+     }
+    },
+    "required": [
+     "text"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "save_memory",
+   "description": "Save a user preference, instruction, or fact to persistent memory. Use this when the user tells you something about themselves, their preferences, or how they want you to behave — so you remember it in future conversations. Examples: preferred name, communication style, working hours, email tone. Memory only shapes your replies; it never makes anything happen on its own. For anything that should happen later or on a schedule, use save_automation.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "key": {
+      "type": "string",
+      "description": "Short identifier for this memory (e.g. \"preferred_name\", \"email_style\", \"meeting_prefs\"). Used as the filename — lowercase letters, numbers, underscores only."
+     },
+     "content": {
+      "type": "string",
+      "description": "What to remember. Write as a clear instruction or fact, e.g. \"Always address the user as Mike\" or \"User prefers formal email tone with no bullet points\"."
+     }
+    },
+    "required": [
+     "key",
+     "content"
+    ]
+   }
+  }
+ },
+ {
+  "type": "function",
+  "function": {
+   "name": "get_my_automations",
+   "description": "Show all active automations running for the user: scheduled tasks, webhook subscriptions, and pending reminders. Use when the user asks \"what are you doing for me?\", \"what automations do I have?\", or similar.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "user_id": {
+      "type": "string",
+      "description": "User ID to get automations for (defaults to \"default\")"
+     }
+    },
+    "required": []
+   }
+  }
+ }
+]

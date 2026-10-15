@@ -1,0 +1,2677 @@
+[
+ {
+  "id": "t3-001",
+  "query": "any new email?",
+  "tools": [
+   "get_unread_mail"
+  ]
+ },
+ {
+  "id": "t3-002",
+  "query": "check my inbox pls",
+  "tools": [
+   "get_unread_mail"
+  ]
+ },
+ {
+  "id": "t3-003",
+  "query": "do i have anything unread from this morning",
+  "tools": [
+   "get_unread_mail"
+  ],
+  "alt_map": {
+   "get_unread_mail": [
+    "search_mail"
+   ]
+  }
+ },
+ {
+  "id": "t3-004",
+  "query": "find the email from Priya Raman about the vendor contract",
+  "tools": [
+   "search_mail"
+  ]
+ },
+ {
+  "id": "t3-005",
+  "query": "search my mail for invoices with attachments from september",
+  "tools": [
+   "search_mail"
+  ]
+ },
+ {
+  "id": "t3-006",
+  "query": "pull up emails from ops@brightwater.example.com in the last two weeks",
+  "tools": [
+   "search_mail"
+  ]
+ },
+ {
+  "id": "t3-007",
+  "query": "hey can you uh check if theres anything from um Lorenzo in my email about the shipment thing",
+  "tools": [
+   "search_mail"
+  ]
+ },
+ {
+  "id": "t3-008",
+  "query": "show me everything in my Follow Up category",
+  "tools": [
+   "list_mail_by_category"
+  ]
+ },
+ {
+  "id": "t3-009",
+  "query": "whats tagged red category in my mail",
+  "tools": [
+   "list_mail_by_category"
+  ]
+ },
+ {
+  "id": "t3-010",
+  "query": "send an email to dana.kowalski@example.com subject Friday offsite, body: Can you confirm headcount by Wednesday? Thanks",
+  "tools": [
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-011",
+  "query": "email Tomas and tell him the shipment slipped to the 21st",
+  "tools": [
+   "search_contacts",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-012",
+  "query": "write an email to jen@example.com, raul@example.com and mei@example.com saying the design review moved to 2pm",
+  "tools": [
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-013",
+  "query": "send Hiroko the Q3 forecast deck",
+  "tools": [
+   "search_contacts",
+   "search_onedrive",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-014",
+  "query": "email lena.ortiz@example.com the budget_v4 spreadsheet from my onedrive, cc me",
+  "tools": [
+   "search_onedrive",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-015",
+  "query": "shoot a quick note to Anders saying thanks for covering my shift yesterday",
+  "tools": [
+   "search_contacts",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-016",
+  "query": "reply to Gareth's email about the pricing sheet and say looks good to me",
+  "tools": [
+   "search_mail",
+   "reply_to_mail"
+  ]
+ },
+ {
+  "id": "t3-017",
+  "query": "respond to the latest email from Northfield Supply saying we'll pay net 30",
+  "tools": [
+   "search_mail",
+   "reply_to_mail"
+  ]
+ },
+ {
+  "id": "t3-018",
+  "query": "reply to the newest unread from Wilhelmina - tell her yes I can present",
+  "tools": [
+   "search_mail",
+   "reply_to_mail"
+  ],
+  "alt_map": {
+   "search_mail": [
+    "get_unread_mail"
+   ]
+  }
+ },
+ {
+  "id": "t3-019",
+  "query": "forward the Kestrel Analytics proposal email to anika.basu@example.com",
+  "tools": [
+   "search_mail",
+   "forward_mail"
+  ]
+ },
+ {
+  "id": "t3-020",
+  "query": "loop in Desmond on the email thread with the auditors",
+  "tools": [
+   "search_mail",
+   "search_contacts",
+   "forward_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-021",
+  "query": "fwd marias email abt the badges to securty@example.com",
+  "tools": [
+   "search_mail",
+   "forward_mail"
+  ]
+ },
+ {
+  "id": "t3-022",
+  "query": "mark all the newsletters from Larkspur as read",
+  "tools": [
+   "search_mail",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-023",
+  "query": "flag the email from the CFO about headcount",
+  "tools": [
+   "search_mail",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-024",
+  "query": "put the vendor onboarding email in the Follow Up category",
+  "tools": [
+   "search_mail",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-025",
+  "query": "what attachments are on the email from Pinecrest Health",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments"
+  ]
+ },
+ {
+  "id": "t3-026",
+  "query": "list the attachments on the last email from the auditors",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments"
+  ]
+ },
+ {
+  "id": "t3-027",
+  "query": "open the PDF Ingrid sent and tell me what the payment terms are",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments",
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "t3-028",
+  "query": "there's a screenshot in Felix's bug report email, what does it show",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments",
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "t3-029",
+  "query": "read the contract docx Ostrander & Vale emailed me and summarize the termination clause",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments",
+   "read_attachment"
+  ]
+ },
+ {
+  "id": "t3-030",
+  "query": "check unread and flag anything from my boss Ellen",
+  "tools": [
+   "get_unread_mail",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-031",
+  "query": "find the email from Bram about the lease renewal, forward it to legal@example.com and mark it read",
+  "tools": [
+   "search_mail",
+   "forward_mail",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-032",
+  "query": "reply to Sunita's question about the launch date with 'Nov 3' then add a todo to update the roadmap",
+  "tools": [
+   "search_mail",
+   "reply_to_mail",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-033",
+  "query": "any new mail from clients? if Ostrander wrote, reply that I'll call tomorrow",
+  "tools": [
+   "get_unread_mail",
+   "reply_to_mail"
+  ],
+  "alt_map": {
+   "get_unread_mail": [
+    "search_mail"
+   ]
+  }
+ },
+ {
+  "id": "t3-034",
+  "query": "mark everything in the Follow Up category as read",
+  "tools": [
+   "list_mail_by_category",
+   "update_mail_flags"
+  ]
+ },
+ {
+  "id": "t3-035",
+  "query": "whats in the attachments on my red category emails",
+  "tools": [
+   "list_mail_by_category",
+   "get_mail_attachments"
+  ]
+ },
+ {
+  "id": "t3-036",
+  "query": "find emails from Kestrel this month and forward the newest one to rhea@example.com",
+  "tools": [
+   "search_mail",
+   "forward_mail"
+  ]
+ },
+ {
+  "id": "t3-037",
+  "query": "make a todo for each unread email from Brightwater",
+  "tools": [
+   "search_mail",
+   "create_todo_task"
+  ],
+  "alt_map": {
+   "search_mail": [
+    "get_unread_mail"
+   ]
+  }
+ },
+ {
+  "id": "t3-038",
+  "query": "reply to Lucia's email about the catering order saying confirmed, and remind me in an hour to follow up with the caterer",
+  "tools": [
+   "search_mail",
+   "reply_to_mail",
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "t3-039",
+  "query": "save the text of the notes attachment from Paulo's email into my onedrive as Documents/paulo-notes.txt",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments",
+   "read_attachment",
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-040",
+  "query": "whats on my calendar today",
+  "tools": [
+   "get_calendar_events"
+  ]
+ },
+ {
+  "id": "t3-041",
+  "query": "what does next week look like",
+  "tools": [
+   "get_calendar_events"
+  ]
+ },
+ {
+  "id": "t3-042",
+  "query": "when is my next 1:1 with Rosa",
+  "tools": [
+   "get_calendar_events"
+  ]
+ },
+ {
+  "id": "t3-043",
+  "query": "block 2-4 tomorrow for focus time",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-044",
+  "query": "schedule a teams call with wendell.price@example.com thursday 10am for 30 min about the RFP",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-045",
+  "query": "set up a meeting with Yusuf and Clara next tuesday at 3, online",
+  "tools": [
+   "search_contacts",
+   "create_event"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-046",
+  "query": "put dentist appt on my calendar oct 22 at 8:30am, location Riverside Dental",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-047",
+  "query": "put API review on my calendar tmrw 11 to 12 comma make it a teams meeting",
+  "tools": [
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-048",
+  "query": "move my 3pm today to 4",
+  "tools": [
+   "get_calendar_events",
+   "update_event"
+  ]
+ },
+ {
+  "id": "t3-049",
+  "query": "push the budget review to next monday same time",
+  "tools": [
+   "get_calendar_events",
+   "update_event"
+  ]
+ },
+ {
+  "id": "t3-050",
+  "query": "add jorge.alvarez@example.com to the vendor sync tomorrow",
+  "tools": [
+   "get_calendar_events",
+   "update_event"
+  ]
+ },
+ {
+  "id": "t3-051",
+  "query": "make thursday's standup a teams meeting",
+  "tools": [
+   "get_calendar_events",
+   "update_event"
+  ]
+ },
+ {
+  "id": "t3-052",
+  "query": "cancel my 4pm with the recruiter",
+  "tools": [
+   "get_calendar_events",
+   "delete_event"
+  ]
+ },
+ {
+  "id": "t3-053",
+  "query": "kill the friday retro, we're skipping it this week",
+  "tools": [
+   "get_calendar_events",
+   "delete_event"
+  ]
+ },
+ {
+  "id": "t3-054",
+  "query": "accept the invite for the quarterly all hands",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "t3-055",
+  "query": "decline the 8am vendor demo and say I have a conflict",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "t3-056",
+  "query": "tentatively accept the team dinner on the 24th",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "t3-057",
+  "query": "decline tmrws 9am pls",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "t3-058",
+  "query": "find a time next week for me, Odile and Nkechi, 45 min",
+  "tools": [
+   "search_contacts",
+   "find_meeting_times"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "find_meeting_times": [
+    "get_free_busy"
+   ]
+  }
+ },
+ {
+  "id": "t3-059",
+  "query": "when can i meet with hamid.saleh@example.com and lu.chen@example.com for an hour this week",
+  "tools": [
+   "find_meeting_times"
+  ],
+  "alt_map": {
+   "find_meeting_times": [
+    "get_free_busy"
+   ]
+  }
+ },
+ {
+  "id": "t3-060",
+  "query": "is Bettina free thursday afternoon",
+  "tools": [
+   "search_contacts",
+   "get_free_busy"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "get_free_busy": [
+    "find_meeting_times"
+   ]
+  }
+ },
+ {
+  "id": "t3-061",
+  "query": "check if kai.nakamura@example.com is busy tomorrow between 1 and 3",
+  "tools": [
+   "get_free_busy"
+  ],
+  "alt_map": {
+   "get_free_busy": [
+    "find_meeting_times"
+   ]
+  }
+ },
+ {
+  "id": "t3-062",
+  "query": "what did we discuss in yesterday's pipeline review meeting",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript"
+  ]
+ },
+ {
+  "id": "t3-063",
+  "query": "summarize the transcript from this morning's standup",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript"
+  ]
+ },
+ {
+  "id": "t3-064",
+  "query": "what did Leon say on the design crit call on monday",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript"
+  ]
+ },
+ {
+  "id": "t3-065",
+  "query": "find 30 min with Marisol this week and send her an invite",
+  "tools": [
+   "search_contacts",
+   "find_meeting_times",
+   "create_event"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "find_meeting_times": [
+    "get_free_busy"
+   ]
+  }
+ },
+ {
+  "id": "t3-066",
+  "query": "cancel the 2pm and email the attendees that I'm out sick",
+  "tools": [
+   "get_calendar_events",
+   "delete_event",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-067",
+  "query": "what's on my calendar tomorrow and do I have unread mail",
+  "tools": [
+   "get_calendar_events",
+   "get_unread_mail"
+  ]
+ },
+ {
+  "id": "t3-068",
+  "query": "accept the board prep invite and block an hour before it to prepare",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event",
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-069",
+  "query": "summarize yesterday's client kickoff call and email the notes to bea.romero@example.com",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-070",
+  "query": "pull the action items from the sprint planning transcript and add each as a todo",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-071",
+  "query": "check jamie's calendar tomorrow and if he's open at 2 book a 30 min sync with him",
+  "tools": [
+   "search_contacts",
+   "get_free_busy",
+   "create_event"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "get_free_busy": [
+    "find_meeting_times"
+   ]
+  }
+ },
+ {
+  "id": "t3-072",
+  "query": "decline the friday 4pm and tell Arjun in teams I can't make it",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event",
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-073",
+  "query": "schedule a 1hr review with Priya whenever she's next free and add a todo for me to prep the slides",
+  "tools": [
+   "search_contacts",
+   "find_meeting_times",
+   "create_event",
+   "create_todo_task"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "find_meeting_times": [
+    "get_free_busy"
+   ]
+  }
+ },
+ {
+  "id": "t3-074",
+  "query": "move the vendor sync to 11am. also post in the vendors channel that it moved",
+  "tools": [
+   "get_calendar_events",
+   "update_event",
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-075",
+  "query": "catch me up on the marketing channel",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages"
+  ]
+ },
+ {
+  "id": "t3-076",
+  "query": "did anyone mention the outage in the engineering channel",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages"
+  ]
+ },
+ {
+  "id": "t3-077",
+  "query": "post in the sales team general channel: Q4 kickoff deck is in the files tab",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-078",
+  "query": "announce in the announcements channel that the office is closed monday",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-079",
+  "query": "show my recent teams chats",
+  "tools": [
+   "list_chats"
+  ]
+ },
+ {
+  "id": "t3-080",
+  "query": "what did Ines say in our chat",
+  "tools": [
+   "list_chats",
+   "get_chat_messages"
+  ]
+ },
+ {
+  "id": "t3-081",
+  "query": "read the latest from the Project Falcon group chat",
+  "tools": [
+   "list_chats",
+   "get_chat_messages"
+  ]
+ },
+ {
+  "id": "t3-082",
+  "query": "message Hanna on teams that I'm running 5 min late",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-083",
+  "query": "send a DM to Viktor: can you review my PR when you get a sec",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-084",
+  "query": "tell the launch crew group chat that the venue is confirmed",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-085",
+  "query": "msg the leadership grp chat that numbers r in",
+  "tools": [
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-086",
+  "query": "what's in the image Zainab posted in our chat",
+  "tools": [
+   "list_chats",
+   "get_chat_messages",
+   "read_teams_image"
+  ]
+ },
+ {
+  "id": "t3-087",
+  "query": "someone dropped a whiteboard photo in the design channel, can you read it",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages",
+   "read_teams_image"
+  ]
+ },
+ {
+  "id": "t3-088",
+  "query": "what does the chart Dmitri shared in the finance group chat say",
+  "tools": [
+   "list_chats",
+   "get_chat_messages",
+   "read_teams_image"
+  ]
+ },
+ {
+  "id": "t3-089",
+  "query": "what teams am i in",
+  "tools": [
+   "list_my_teams"
+  ]
+ },
+ {
+  "id": "t3-090",
+  "query": "list the channels in the Customer Success team",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels"
+  ]
+ },
+ {
+  "id": "t3-091",
+  "query": "is Ruth online right now",
+  "tools": [
+   "search_contacts",
+   "get_user_presence"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-092",
+  "query": "check my teams status",
+  "tools": [
+   "get_user_presence"
+  ]
+ },
+ {
+  "id": "t3-093",
+  "query": "is malik.osei@example.com available or in a meeting",
+  "tools": [
+   "get_user_presence"
+  ]
+ },
+ {
+  "id": "t3-094",
+  "query": "read the vendor-escalations channel and DM Ines a summary",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages",
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-095",
+  "query": "if Ruth is available ping her on teams asking if she has 5 min",
+  "tools": [
+   "search_contacts",
+   "get_user_presence",
+   "list_chats",
+   "send_teams_chat_message"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-096",
+  "query": "post the join link for tomorrow's town hall in the all-staff channel",
+  "tools": [
+   "get_calendar_events",
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-097",
+  "query": "read the latest in the Falcon group chat and add any action items for me to my todo list",
+  "tools": [
+   "list_chats",
+   "get_chat_messages",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-098",
+  "query": "whats Imogen's email and is she online",
+  "tools": [
+   "search_contacts",
+   "get_user_presence"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-099",
+  "query": "what's my status set to and who are my top collaborators",
+  "tools": [
+   "get_user_presence",
+   "get_relevant_people"
+  ]
+ },
+ {
+  "id": "t3-100",
+  "query": "find my Q3 budget spreadsheet",
+  "tools": [
+   "search_onedrive"
+  ]
+ },
+ {
+  "id": "t3-101",
+  "query": "what's in my Documents folder",
+  "tools": [
+   "list_onedrive_children"
+  ]
+ },
+ {
+  "id": "t3-102",
+  "query": "list files in Documents/Clients/Brightwater",
+  "tools": [
+   "list_onedrive_children"
+  ]
+ },
+ {
+  "id": "t3-103",
+  "query": "read Documents/meeting-notes.txt",
+  "tools": [
+   "read_onedrive_file"
+  ]
+ },
+ {
+  "id": "t3-104",
+  "query": "open the onboarding checklist .md file and tell me the first 5 steps",
+  "tools": [
+   "search_onedrive",
+   "read_onedrive_file"
+  ]
+ },
+ {
+  "id": "t3-105",
+  "query": "what's in the crm export.csv in my onedrive",
+  "tools": [
+   "search_onedrive",
+   "read_onedrive_file"
+  ]
+ },
+ {
+  "id": "t3-106",
+  "query": "how big is Documents/Archive/2025-taxes.zip",
+  "tools": [
+   "get_onedrive_item"
+  ]
+ },
+ {
+  "id": "t3-107",
+  "query": "when was Documents/Proposals/Kestrel.docx last modified",
+  "tools": [
+   "get_onedrive_item"
+  ]
+ },
+ {
+  "id": "t3-108",
+  "query": "get the details for Pictures/headshot.png in my onedrive",
+  "tools": [
+   "get_onedrive_item"
+  ]
+ },
+ {
+  "id": "t3-109",
+  "query": "save these notes as Documents/standup-1013.txt: ship blockers, vendor call, hiring loop",
+  "tools": [
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-110",
+  "query": "upload a file called todo.md to my onedrive root with 'call bank, renew passport'",
+  "tools": [
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-111",
+  "query": "make a folder called 2027 Planning",
+  "tools": [
+   "create_folder"
+  ]
+ },
+ {
+  "id": "t3-112",
+  "query": "create a Receipts folder inside Documents/Finance",
+  "tools": [
+   "create_folder"
+  ]
+ },
+ {
+  "id": "t3-113",
+  "query": "move the signed SOW into the Contracts folder",
+  "tools": [
+   "search_onedrive",
+   "move_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-114",
+  "query": "move budget_draft.xlsx to Archive",
+  "tools": [
+   "search_onedrive",
+   "move_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-115",
+  "query": "rename final_final_v3.docx to Board Memo Oct 2026.docx",
+  "tools": [
+   "search_onedrive",
+   "rename_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-116",
+  "query": "rename the Q2 deck to Q2 Business Review",
+  "tools": [
+   "search_onedrive",
+   "rename_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-117",
+  "query": "delete the duplicate copy of the vendor list",
+  "tools": [
+   "search_onedrive",
+   "delete_drive_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-118",
+  "query": "trash the old draft-proposal.docx, I don't need it",
+  "tools": [
+   "search_onedrive",
+   "delete_drive_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-119",
+  "query": "get rid of the Temp folder in my onedrive",
+  "tools": [
+   "search_onedrive",
+   "delete_drive_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-120",
+  "query": "give me a share link to the event photos folder",
+  "tools": [
+   "search_onedrive",
+   "create_sharing_link"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-121",
+  "query": "make a view-only link for the pricing one-pager that anyone in the org can open",
+  "tools": [
+   "search_onedrive",
+   "create_sharing_link"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-122",
+  "query": "who has access to the salary bands spreadsheet",
+  "tools": [
+   "search_onedrive",
+   "get_file_permissions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-123",
+  "query": "is the board deck shared with anyone outside the company",
+  "tools": [
+   "search_onedrive",
+   "get_file_permissions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-124",
+  "query": "show version history for the employee handbook",
+  "tools": [
+   "search_onedrive",
+   "get_file_versions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-125",
+  "query": "who edited the roadmap doc last and when",
+  "tools": [
+   "search_onedrive",
+   "get_file_versions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-126",
+  "query": "i want to restore an older version of the pricing model, what versions are there",
+  "tools": [
+   "search_onedrive",
+   "get_file_versions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-127",
+  "query": "what sharepoint sites do i have access to",
+  "tools": [
+   "list_sharepoint_sites"
+  ]
+ },
+ {
+  "id": "t3-128",
+  "query": "show files in the HR sharepoint site",
+  "tools": [
+   "list_sharepoint_sites",
+   "get_sharepoint_files"
+  ]
+ },
+ {
+  "id": "t3-129",
+  "query": "what's in the Finance team's document library",
+  "tools": [
+   "list_my_teams",
+   "get_sharepoint_files"
+  ],
+  "alt_map": {
+   "list_my_teams": [
+    "list_sharepoint_sites"
+   ]
+  }
+ },
+ {
+  "id": "t3-130",
+  "query": "make a folder called Vendor Bids and move the three bid pdfs into it",
+  "tools": [
+   "create_folder",
+   "search_onedrive",
+   "move_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-131",
+  "query": "find the onboarding deck, make a share link and email it to new hire tess.ward@example.com",
+  "tools": [
+   "search_onedrive",
+   "create_sharing_link",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-132",
+  "query": "check who has access to the payroll file and give me its version history too",
+  "tools": [
+   "search_onedrive",
+   "get_file_permissions",
+   "get_file_versions"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-133",
+  "query": "read the readme.txt in the Engineering sharepoint library",
+  "tools": [
+   "list_sharepoint_sites",
+   "get_sharepoint_files",
+   "read_onedrive_file"
+  ]
+ },
+ {
+  "id": "t3-134",
+  "query": "list the files in the Contracts sharepoint site and give me a share link to the MSA",
+  "tools": [
+   "list_sharepoint_sites",
+   "get_sharepoint_files",
+   "create_sharing_link"
+  ]
+ },
+ {
+  "id": "t3-135",
+  "query": "create a folder Documents/Q4 Board, then save an agenda.txt in it with financials, hiring, roadmap",
+  "tools": [
+   "create_folder",
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-136",
+  "query": "rename the Q2 folder to Q2-2026 and move it into Archive",
+  "tools": [
+   "search_onedrive",
+   "rename_item",
+   "move_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-137",
+  "query": "find the vendor list csv, read it and email the top 3 vendor names to ap@example.com",
+  "tools": [
+   "search_onedrive",
+   "read_onedrive_file",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-138",
+  "query": "check who has access to the forecast file and email Mateo that his edit access is being removed",
+  "tools": [
+   "search_onedrive",
+   "get_file_permissions",
+   "search_contacts",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-139",
+  "query": "what sheets are in the 2026 forecast workbook",
+  "tools": [
+   "list_excel_sheets"
+  ]
+ },
+ {
+  "id": "t3-140",
+  "query": "list tabs in headcount.xlsx",
+  "tools": [
+   "list_excel_sheets"
+  ]
+ },
+ {
+  "id": "t3-141",
+  "query": "read A1:F20 on the Summary sheet of Q3 Budget",
+  "tools": [
+   "read_excel_range"
+  ]
+ },
+ {
+  "id": "t3-142",
+  "query": "what's the total in cell H42 of the expenses spreadsheet",
+  "tools": [
+   "read_excel_range"
+  ]
+ },
+ {
+  "id": "t3-143",
+  "query": "show me the numbers in the inventory workbook, not sure which sheet has the counts",
+  "tools": [
+   "list_excel_sheets",
+   "read_excel_range"
+  ]
+ },
+ {
+  "id": "t3-144",
+  "query": "read the Leads table in the CRM export workbook",
+  "tools": [
+   "read_excel_table"
+  ]
+ },
+ {
+  "id": "t3-145",
+  "query": "what's the value of the named range TotalRevenue in the board model",
+  "tools": [
+   "read_excel_named_range"
+  ]
+ },
+ {
+  "id": "t3-146",
+  "query": "read the TaxRate name from the pricing calculator workbook",
+  "tools": [
+   "read_excel_named_range"
+  ]
+ },
+ {
+  "id": "t3-147",
+  "query": "what does the named range Q4_Targets show in targets.xlsx",
+  "tools": [
+   "read_excel_named_range"
+  ]
+ },
+ {
+  "id": "t3-148",
+  "query": "put 48500 in B7 on the Budget sheet of dept_budget.xlsx",
+  "tools": [
+   "write_excel_range"
+  ]
+ },
+ {
+  "id": "t3-149",
+  "query": "add a SUM formula in D20 summing D2:D19 on the Expenses sheet of travel.xlsx",
+  "tools": [
+   "write_excel_range"
+  ]
+ },
+ {
+  "id": "t3-150",
+  "query": "add a row to the Expenses table in my expense report: 10/12, Uber, 23.40, client visit",
+  "tools": [
+   "read_excel_table",
+   "add_excel_row"
+  ]
+ },
+ {
+  "id": "t3-151",
+  "query": "log a new lead in the Leads table of crm.xlsx - Corvid Media, Alana Fitch, alana@example.com",
+  "tools": [
+   "read_excel_table",
+   "add_excel_row"
+  ]
+ },
+ {
+  "id": "t3-152",
+  "query": "append today's mileage, 42 miles, to the Mileage table in mileage-log.xlsx",
+  "tools": [
+   "read_excel_table",
+   "add_excel_row"
+  ]
+ },
+ {
+  "id": "t3-153",
+  "query": "read the open orders table and email a summary to ops@example.com",
+  "tools": [
+   "read_excel_table",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-154",
+  "query": "check the TotalRevenue named range and post the number in the finance channel",
+  "tools": [
+   "read_excel_named_range",
+   "list_my_teams",
+   "list_team_channels",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-155",
+  "query": "pull the Q3 numbers from the Summary sheet of q3_results.xlsx and save them to a new text file Documents/q3-summary.txt",
+  "tools": [
+   "read_excel_range",
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-156",
+  "query": "what's on my to do list",
+  "tools": [
+   "list_todo_tasks"
+  ]
+ },
+ {
+  "id": "t3-157",
+  "query": "show my tasks",
+  "tools": [
+   "list_todo_tasks"
+  ]
+ },
+ {
+  "id": "t3-158",
+  "query": "whats teh status on my to dos",
+  "tools": [
+   "list_todo_tasks"
+  ]
+ },
+ {
+  "id": "t3-159",
+  "query": "what task lists do i have",
+  "tools": [
+   "list_todo_task_lists"
+  ]
+ },
+ {
+  "id": "t3-160",
+  "query": "what's on my Groceries list",
+  "tools": [
+   "list_todo_task_lists",
+   "list_todo_tasks"
+  ]
+ },
+ {
+  "id": "t3-161",
+  "query": "remind me to review the Kestrel proposal",
+  "tools": [
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-162",
+  "query": "add a task: call the landlord about the leak, due friday",
+  "tools": [
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-163",
+  "query": "new todo high priority renew the SSL cert by oct 30",
+  "tools": [
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-164",
+  "query": "add 'buy printer toner' to my Office Supplies list",
+  "tools": [
+   "list_todo_task_lists",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-165",
+  "query": "mark the expense report task done",
+  "tools": [
+   "list_todo_tasks",
+   "update_todo_task"
+  ]
+ },
+ {
+  "id": "t3-166",
+  "query": "change the due date on 'prep QBR deck' to next wednesday",
+  "tools": [
+   "list_todo_tasks",
+   "update_todo_task"
+  ]
+ },
+ {
+  "id": "t3-167",
+  "query": "delete the 'order cake' task",
+  "tools": [
+   "list_todo_tasks",
+   "delete_todo_task"
+  ]
+ },
+ {
+  "id": "t3-168",
+  "query": "remove the dentist one from my tasks",
+  "tools": [
+   "list_todo_tasks",
+   "delete_todo_task"
+  ]
+ },
+ {
+  "id": "t3-169",
+  "query": "scratch the 'email Bruno' todo, he left the company",
+  "tools": [
+   "list_todo_tasks",
+   "delete_todo_task"
+  ]
+ },
+ {
+  "id": "t3-170",
+  "query": "what planner plans does the Marketing team have",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans"
+  ]
+ },
+ {
+  "id": "t3-171",
+  "query": "show tasks on the Website Relaunch planner board",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks"
+  ]
+ },
+ {
+  "id": "t3-172",
+  "query": "what's left on the engineering sprint board",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks"
+  ]
+ },
+ {
+  "id": "t3-173",
+  "query": "add 'update pricing page' to the website relaunch board due nov 1",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "create_planner_task"
+  ]
+ },
+ {
+  "id": "t3-174",
+  "query": "assign Teodor a task to draft the press release on the PR plan",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "search_people",
+   "create_planner_task"
+  ],
+  "alt_map": {
+   "search_people": [
+    "search_contacts"
+   ]
+  }
+ },
+ {
+  "id": "t3-175",
+  "query": "put 'vendor security questionnaire' on the compliance board, urgent priority",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "create_planner_task"
+  ]
+ },
+ {
+  "id": "t3-176",
+  "query": "mark 'migrate DNS' as complete on the infra board",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks",
+   "update_planner_task"
+  ]
+ },
+ {
+  "id": "t3-177",
+  "query": "set the 'customer survey' planner task to 50 percent",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks",
+   "update_planner_task"
+  ]
+ },
+ {
+  "id": "t3-178",
+  "query": "move the due date of the 'brochure proofs' task on the marketing board to the 28th",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks",
+   "update_planner_task"
+  ]
+ },
+ {
+  "id": "t3-179",
+  "query": "create a planner plan called Holiday Campaign for the Marketing team",
+  "tools": [
+   "list_my_teams",
+   "create_planner_plan"
+  ]
+ },
+ {
+  "id": "t3-180",
+  "query": "set up a planner for the Partnerships team, call it Partner Pipeline",
+  "tools": [
+   "list_my_teams",
+   "create_planner_plan"
+  ]
+ },
+ {
+  "id": "t3-181",
+  "query": "check my tasks and mark the timesheet one complete",
+  "tools": [
+   "list_todo_tasks",
+   "update_todo_task"
+  ]
+ },
+ {
+  "id": "t3-182",
+  "query": "flag the email from Corinne about the audit and add a todo to respond by thursday",
+  "tools": [
+   "search_mail",
+   "update_mail_flags",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-183",
+  "query": "list the planner tasks on the onboarding board and email the incomplete ones to hr@example.com",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "list_planner_tasks",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-184",
+  "query": "add the MSA review to the Legal planner board and set me a reminder friday at 10 to check on it",
+  "tools": [
+   "list_my_teams",
+   "list_planner_plans",
+   "create_planner_task",
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "t3-185",
+  "query": "what onenote notebooks do i have",
+  "tools": [
+   "list_onenote_notebooks"
+  ]
+ },
+ {
+  "id": "t3-186",
+  "query": "what sections are in my Work Notes notebook",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections"
+  ]
+ },
+ {
+  "id": "t3-187",
+  "query": "list the pages in the Meetings section of my work notebook",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections",
+   "list_onenote_pages"
+  ]
+ },
+ {
+  "id": "t3-188",
+  "query": "open my onenote page on the Brightwater kickoff and summarize it",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections",
+   "list_onenote_pages",
+   "get_onenote_page_content"
+  ]
+ },
+ {
+  "id": "t3-189",
+  "query": "what did I write in onenote about the hiring plan",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections",
+   "list_onenote_pages",
+   "get_onenote_page_content"
+  ]
+ },
+ {
+  "id": "t3-190",
+  "query": "read my 'Recipes' page in the Personal notebook",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections",
+   "list_onenote_pages",
+   "get_onenote_page_content"
+  ]
+ },
+ {
+  "id": "t3-191",
+  "query": "show my contacts",
+  "tools": [
+   "list_contacts"
+  ]
+ },
+ {
+  "id": "t3-192",
+  "query": "which of my contacts work at Kestrel",
+  "tools": [
+   "list_contacts"
+  ]
+ },
+ {
+  "id": "t3-193",
+  "query": "whats Imogen Hale's phone number",
+  "tools": [
+   "search_contacts"
+  ]
+ },
+ {
+  "id": "t3-194",
+  "query": "add a contact: Selma Byrne, selma.byrne@example.com, VP Ops at Corvid Media",
+  "tools": [
+   "create_contact"
+  ]
+ },
+ {
+  "id": "t3-195",
+  "query": "save Nico Ferreira's number 503-555-0182 as a new contact",
+  "tools": [
+   "create_contact"
+  ]
+ },
+ {
+  "id": "t3-196",
+  "query": "update Imogen Hale's title to Director of Finance",
+  "tools": [
+   "search_contacts",
+   "update_contact"
+  ]
+ },
+ {
+  "id": "t3-197",
+  "query": "Rafael's new mobile is 971-555-0134, update his contact",
+  "tools": [
+   "search_contacts",
+   "update_contact"
+  ]
+ },
+ {
+  "id": "t3-198",
+  "query": "change Selma's company to Brightwater Logistics in my contacts",
+  "tools": [
+   "search_contacts",
+   "update_contact"
+  ]
+ },
+ {
+  "id": "t3-199",
+  "query": "who do i work with most",
+  "tools": [
+   "get_relevant_people"
+  ]
+ },
+ {
+  "id": "t3-200",
+  "query": "list my top 10 collaborators",
+  "tools": [
+   "get_relevant_people"
+  ]
+ },
+ {
+  "id": "t3-201",
+  "query": "who's in procurement",
+  "tools": [
+   "search_people"
+  ]
+ },
+ {
+  "id": "t3-202",
+  "query": "who is Greta",
+  "tools": [
+   "search_people"
+  ],
+  "alt_map": {
+   "search_people": [
+    "search_contacts"
+   ]
+  }
+ },
+ {
+  "id": "t3-203",
+  "query": "add Bastian Kruger, bastian@example.com, as a contact and send him a welcome email",
+  "tools": [
+   "create_contact",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-204",
+  "query": "who's in legal? set up a call with whoever handles contracts tomorrow at 11",
+  "tools": [
+   "search_people",
+   "create_event"
+  ]
+ },
+ {
+  "id": "t3-205",
+  "query": "find anything about the Halvorsen merger - mail, files, chats, whatever",
+  "tools": [
+   "search_across_m365"
+  ]
+ },
+ {
+  "id": "t3-206",
+  "query": "where did someone mention 'badge reader', email or teams I don't remember",
+  "tools": [
+   "search_across_m365"
+  ]
+ },
+ {
+  "id": "t3-207",
+  "query": "I know someone sent me the wifi password somewhere, find it",
+  "tools": [
+   "search_across_m365"
+  ]
+ },
+ {
+  "id": "t3-208",
+  "query": "whenever I get an email from ceo@example.com, ping me right away",
+  "tools": [
+   "save_automation"
+  ]
+ },
+ {
+  "id": "t3-209",
+  "query": "every time a new invoice email comes in, add a todo to pay it",
+  "tools": [
+   "save_automation"
+  ]
+ },
+ {
+  "id": "t3-210",
+  "query": "automatically flag emails from Pinecrest Health",
+  "tools": [
+   "save_automation"
+  ]
+ },
+ {
+  "id": "t3-211",
+  "query": "list my saved automations",
+  "tools": [
+   "list_automations"
+  ],
+  "alt_map": {
+   "list_automations": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-212",
+  "query": "pause the invoice automation",
+  "tools": [
+   "list_automations",
+   "pause_automation"
+  ]
+ },
+ {
+  "id": "t3-213",
+  "query": "disable the calendar change alert",
+  "tools": [
+   "list_automations",
+   "pause_automation"
+  ]
+ },
+ {
+  "id": "t3-214",
+  "query": "turn the invoice rule back on",
+  "tools": [
+   "list_automations",
+   "enable_automation"
+  ]
+ },
+ {
+  "id": "t3-215",
+  "query": "resume the flagging automation",
+  "tools": [
+   "list_automations",
+   "enable_automation"
+  ]
+ },
+ {
+  "id": "t3-216",
+  "query": "re-enable the CEO alert rule",
+  "tools": [
+   "list_automations",
+   "enable_automation"
+  ]
+ },
+ {
+  "id": "t3-217",
+  "query": "delete the Pinecrest flag automation",
+  "tools": [
+   "list_automations",
+   "delete_automation"
+  ]
+ },
+ {
+  "id": "t3-218",
+  "query": "remove the calendar alert rule permanently",
+  "tools": [
+   "list_automations",
+   "delete_automation"
+  ]
+ },
+ {
+  "id": "t3-219",
+  "query": "change the invoice rule so it also forwards the email to ap@example.com",
+  "tools": [
+   "list_automations",
+   "update_automation"
+  ]
+ },
+ {
+  "id": "t3-220",
+  "query": "rename the CEO rule to VIP alert",
+  "tools": [
+   "list_automations",
+   "update_automation"
+  ]
+ },
+ {
+  "id": "t3-221",
+  "query": "edit the Pinecrest rule to also cover emails from Northfield",
+  "tools": [
+   "list_automations",
+   "update_automation"
+  ]
+ },
+ {
+  "id": "t3-222",
+  "query": "every monday at 9 send me a summary of my week",
+  "tools": [
+   "create_scheduled_task"
+  ]
+ },
+ {
+  "id": "t3-223",
+  "query": "every weekday at 8am give me my briefing",
+  "tools": [
+   "create_scheduled_task"
+  ]
+ },
+ {
+  "id": "t3-224",
+  "query": "on the 1st of each month remind me to submit expenses",
+  "tools": [
+   "create_scheduled_task"
+  ]
+ },
+ {
+  "id": "t3-225",
+  "query": "what scheduled tasks do i have",
+  "tools": [
+   "list_scheduled_tasks"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-226",
+  "query": "cancel the monday summary task",
+  "tools": [
+   "list_scheduled_tasks",
+   "cancel_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-227",
+  "query": "stop the 8am briefing permanently",
+  "tools": [
+   "list_scheduled_tasks",
+   "cancel_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-228",
+  "query": "pause the monday summary for two weeks, I'm on PTO",
+  "tools": [
+   "list_scheduled_tasks",
+   "pause_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-229",
+  "query": "pause the expense reminder",
+  "tools": [
+   "list_scheduled_tasks",
+   "pause_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-230",
+  "query": "turn the monday summary back on",
+  "tools": [
+   "list_scheduled_tasks",
+   "resume_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-231",
+  "query": "resume the daily briefing",
+  "tools": [
+   "list_scheduled_tasks",
+   "resume_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-232",
+  "query": "restart the monthly expense task",
+  "tools": [
+   "list_scheduled_tasks",
+   "resume_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-233",
+  "query": "remind me in 2 hours to call the bank",
+  "tools": [
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "t3-234",
+  "query": "ping me tomorrow at 9am about the vendor invoice",
+  "tools": [
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "t3-235",
+  "query": "what are you doing for me",
+  "tools": [
+   "get_my_automations"
+  ]
+ },
+ {
+  "id": "t3-236",
+  "query": "what reminders and scheduled stuff do you have running for me",
+  "tools": [
+   "get_my_automations"
+  ]
+ },
+ {
+  "id": "t3-237",
+  "query": "set up a weekly friday 4pm task to summarize the sales channel and pause the monday summary",
+  "tools": [
+   "create_scheduled_task",
+   "list_scheduled_tasks",
+   "pause_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-238",
+  "query": "list my automations and delete the one about invoices",
+  "tools": [
+   "list_automations",
+   "delete_automation"
+  ]
+ },
+ {
+  "id": "t3-239",
+  "query": "how much has this cost so far and what's running for me in the background",
+  "tools": [
+   "get_usage_report",
+   "get_my_automations"
+  ]
+ },
+ {
+  "id": "t3-240",
+  "query": "remind me at 3 to join the call, and remember that I always want reminders 10 min early",
+  "tools": [
+   "set_reminder",
+   "save_memory"
+  ]
+ },
+ {
+  "id": "t3-241",
+  "query": "give me my morning briefing",
+  "tools": [
+   "generate_daily_briefing"
+  ]
+ },
+ {
+  "id": "t3-242",
+  "query": "catch me up",
+  "tools": [
+   "generate_daily_briefing"
+  ]
+ },
+ {
+  "id": "t3-243",
+  "query": "how much have you cost so far",
+  "tools": [
+   "get_usage_report"
+  ]
+ },
+ {
+  "id": "t3-244",
+  "query": "whats my AI spend this month",
+  "tools": [
+   "get_usage_report"
+  ]
+ },
+ {
+  "id": "t3-245",
+  "query": "where do I change what you're allowed to do",
+  "tools": [
+   "get_my_settings"
+  ]
+ },
+ {
+  "id": "t3-246",
+  "query": "what can you do",
+  "tools": [
+   "get_my_settings"
+  ]
+ },
+ {
+  "id": "t3-247",
+  "query": "where are my reminders managed",
+  "tools": [
+   "get_my_settings"
+  ]
+ },
+ {
+  "id": "t3-248",
+  "query": "call me Jo from now on",
+  "tools": [
+   "save_memory"
+  ]
+ },
+ {
+  "id": "t3-249",
+  "query": "always keep my emails short and no exclamation points",
+  "tools": [
+   "save_memory"
+  ]
+ },
+ {
+  "id": "t3-250",
+  "query": "go through all 200 of my unread emails and let me know as you find anything urgent, keep me posted along the way",
+  "tools": [
+   "get_unread_mail",
+   "send_message"
+  ]
+ },
+ {
+  "id": "t3-251",
+  "query": "audit every file in my onedrive for external sharing and give me progress updates as you go",
+  "tools": [
+   "search_onedrive",
+   "get_file_permissions",
+   "send_message"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-252",
+  "query": "work through every meeting I had last week, pull each transcript and summarize, and send me updates while you work",
+  "tools": [
+   "get_calendar_events",
+   "get_meeting_transcript",
+   "send_message"
+  ]
+ },
+ {
+  "id": "t3-253",
+  "query": "give me my briefing and remember I only care about emails marked high importance",
+  "tools": [
+   "generate_daily_briefing",
+   "save_memory"
+  ]
+ },
+ {
+  "id": "t3-254",
+  "query": "thanks!",
+  "tools": []
+ },
+ {
+  "id": "t3-255",
+  "query": "ok cool",
+  "tools": []
+ },
+ {
+  "id": "t3-256",
+  "query": "what's 18% of 2,450",
+  "tools": []
+ },
+ {
+  "id": "t3-257",
+  "query": "how do you spell liaison",
+  "tools": []
+ },
+ {
+  "id": "t3-258",
+  "query": "can you rewrite this to sound less harsh: 'this is late again, fix it'",
+  "tools": []
+ },
+ {
+  "id": "t3-259",
+  "query": "whats the difference between cc and bcc",
+  "tools": []
+ },
+ {
+  "id": "t3-260",
+  "query": "good morning",
+  "tools": []
+ },
+ {
+  "id": "t3-261",
+  "query": "lol nvm",
+  "tools": []
+ },
+ {
+  "id": "t3-262",
+  "query": "translate 'see you next week' to spanish",
+  "tools": []
+ },
+ {
+  "id": "t3-263",
+  "query": "write me a 3 line bio for a project manager",
+  "tools": []
+ },
+ {
+  "id": "t3-264",
+  "query": "what does EOD mean",
+  "tools": []
+ },
+ {
+  "id": "t3-265",
+  "query": "never mind, I'll do it myself",
+  "tools": []
+ },
+ {
+  "id": "t3-266",
+  "query": "how many business days are there between oct 14 and oct 31",
+  "tools": []
+ },
+ {
+  "id": "t3-267",
+  "query": "give me a subject line for a quarterly update email",
+  "tools": []
+ },
+ {
+  "id": "t3-268",
+  "query": "you're the best",
+  "tools": []
+ },
+ {
+  "id": "t3-269",
+  "query": "rename the Misc folder to Reference and then delete the empty Temp folder",
+  "tools": [
+   "search_onedrive",
+   "rename_item",
+   "delete_drive_item"
+  ],
+  "alt_map": {
+   "search_onedrive": [
+    "list_onedrive_children"
+   ]
+  }
+ },
+ {
+  "id": "t3-270",
+  "query": "whats in Documents/Old and how big is Documents/Old/backup.zip",
+  "tools": [
+   "list_onedrive_children",
+   "get_onedrive_item"
+  ]
+ },
+ {
+  "id": "t3-271",
+  "query": "list the tabs in the commissions workbook, then put 0.05 in B2 on the Rates sheet",
+  "tools": [
+   "list_excel_sheets",
+   "write_excel_range"
+  ]
+ },
+ {
+  "id": "t3-272",
+  "query": "read the CommissionRate named range in comp_plan.xlsx and add a row to the Payouts table: Ilse, 4200, Oct",
+  "tools": [
+   "read_excel_named_range",
+   "read_excel_table",
+   "add_excel_row"
+  ]
+ },
+ {
+  "id": "t3-273",
+  "query": "close out the 'order badges' todo + delete the 'call printer guy' one",
+  "tools": [
+   "list_todo_tasks",
+   "update_todo_task",
+   "delete_todo_task"
+  ]
+ },
+ {
+  "id": "t3-274",
+  "query": "what lists do I have in To Do, and add 'renew parking permit' to the Admin one",
+  "tools": [
+   "list_todo_task_lists",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-275",
+  "query": "make a new planner board Q1 Hiring for the People team and put a task on it 'write JD for data analyst'",
+  "tools": [
+   "list_my_teams",
+   "create_planner_plan",
+   "create_planner_task"
+  ]
+ },
+ {
+  "id": "t3-276",
+  "query": "update Nico's contact with his new title Sales Lead, and show me my whole contact list after",
+  "tools": [
+   "search_contacts",
+   "update_contact",
+   "list_contacts"
+  ]
+ },
+ {
+  "id": "t3-277",
+  "query": "read my onenote page about the offsite and email the key points to offsite-team@example.com",
+  "tools": [
+   "list_onenote_notebooks",
+   "list_onenote_sections",
+   "list_onenote_pages",
+   "get_onenote_page_content",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-278",
+  "query": "pause the VIP rule, resume the invoice rule",
+  "tools": [
+   "list_automations",
+   "pause_automation",
+   "enable_automation"
+  ]
+ },
+ {
+  "id": "t3-279",
+  "query": "update the invoice automation to only fire on amounts over 1k and delete the old calendar one",
+  "tools": [
+   "list_automations",
+   "update_automation",
+   "delete_automation"
+  ]
+ },
+ {
+  "id": "t3-280",
+  "query": "cancel the daily briefing scheduled task and resume the monday summary",
+  "tools": [
+   "list_scheduled_tasks",
+   "cancel_scheduled_task",
+   "resume_scheduled_task"
+  ],
+  "alt_map": {
+   "list_scheduled_tasks": [
+    "get_my_automations"
+   ]
+  }
+ },
+ {
+  "id": "t3-281",
+  "query": "where do I manage my automations? and what are you running for me now",
+  "tools": [
+   "get_my_settings",
+   "get_my_automations"
+  ]
+ },
+ {
+  "id": "t3-282",
+  "query": "check the project channel in the Delivery team and summarize it, and send me a quick heads up first that you're on it",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages",
+   "send_message"
+  ]
+ },
+ {
+  "id": "t3-283",
+  "query": "whats the photo in the site-visit channel? post a caption describing it in that same channel",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages",
+   "read_teams_image",
+   "send_teams_channel_message"
+  ]
+ },
+ {
+  "id": "t3-284",
+  "query": "find people in marketing and add the first one as an outlook contact",
+  "tools": [
+   "search_people",
+   "create_contact"
+  ]
+ },
+ {
+  "id": "t3-285",
+  "query": "who are my top collaborators and is any of them online right now",
+  "tools": [
+   "get_relevant_people",
+   "get_user_presence"
+  ]
+ },
+ {
+  "id": "t3-286",
+  "query": "search everything for Juniper budget and save a summary to Documents/juniper.txt",
+  "tools": [
+   "search_across_m365",
+   "upload_file"
+  ]
+ },
+ {
+  "id": "t3-287",
+  "query": "every friday at 3 summarize my week; also whenever an email from legal@example.com arrives flag it",
+  "tools": [
+   "create_scheduled_task",
+   "save_automation"
+  ]
+ },
+ {
+  "id": "t3-288",
+  "query": "cost report since monday and my briefing pls",
+  "tools": [
+   "get_usage_report",
+   "generate_daily_briefing"
+  ]
+ },
+ {
+  "id": "t3-289",
+  "query": "move my 1:1 with Rosa to friday and cancel the hiring sync",
+  "tools": [
+   "get_calendar_events",
+   "update_event",
+   "delete_event"
+  ]
+ },
+ {
+  "id": "t3-290",
+  "query": "accept the offsite invite, decline the thursday lunch-and-learn",
+  "tools": [
+   "get_calendar_events",
+   "respond_to_event"
+  ]
+ },
+ {
+  "id": "t3-291",
+  "query": "is Odile free wed morning? if so put a 30 min sync on both our calendars at 9",
+  "tools": [
+   "search_contacts",
+   "get_free_busy",
+   "create_event"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ],
+   "get_free_busy": [
+    "find_meeting_times"
+   ]
+  }
+ },
+ {
+  "id": "t3-292",
+  "query": "grab the PDF from the Pinecrest renewal email, read it, and put the renewal date in my todo list",
+  "tools": [
+   "search_mail",
+   "get_mail_attachments",
+   "read_attachment",
+   "create_todo_task"
+  ]
+ },
+ {
+  "id": "t3-293",
+  "query": "find the CFO's headcount email and reply with the current numbers from the Headcount sheet in staffing.xlsx",
+  "tools": [
+   "search_mail",
+   "read_excel_range",
+   "reply_to_mail"
+  ]
+ },
+ {
+  "id": "t3-294",
+  "query": "forward the Brightwater SOW email to legal@example.com, put it in the Red Category, and set a reminder monday 10am to chase legal",
+  "tools": [
+   "search_mail",
+   "forward_mail",
+   "update_mail_flags",
+   "set_reminder"
+  ]
+ },
+ {
+  "id": "t3-295",
+  "query": "list my sharepoint sites, show me the HR one's files, and tell me who's got access to the PTO policy in there",
+  "tools": [
+   "list_sharepoint_sites",
+   "get_sharepoint_files",
+   "get_file_permissions"
+  ]
+ },
+ {
+  "id": "t3-296",
+  "query": "make a share link for the Q4 deck and drop it in the leadership group chat",
+  "tools": [
+   "search_onedrive",
+   "create_sharing_link",
+   "list_chats",
+   "send_teams_chat_message"
+  ]
+ },
+ {
+  "id": "t3-297",
+  "query": "check unread mail. anything from Nadia, forward to my assistant pat@example.com",
+  "tools": [
+   "get_unread_mail",
+   "forward_mail"
+  ]
+ },
+ {
+  "id": "t3-298",
+  "query": "read the latest in the Ops channel then email the gist to my boss ellen.park@example.com",
+  "tools": [
+   "list_my_teams",
+   "list_team_channels",
+   "get_teams_channel_messages",
+   "send_mail"
+  ]
+ },
+ {
+  "id": "t3-299",
+  "query": "show me the version history on the pricing model then email Ama a link to it",
+  "tools": [
+   "search_onedrive",
+   "get_file_versions",
+   "create_sharing_link",
+   "search_contacts",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ },
+ {
+  "id": "t3-300",
+  "query": "remember that my manager is Ellen Park, and email her that I'm out friday",
+  "tools": [
+   "save_memory",
+   "search_contacts",
+   "send_mail"
+  ],
+  "alt_map": {
+   "search_contacts": [
+    "search_people"
+   ]
+  }
+ }
+]
