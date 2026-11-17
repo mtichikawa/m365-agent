@@ -6,8 +6,8 @@ calling. I built it on my own, working agent-first in Claude Code: I made the de
 ran the evaluations below.
 
 It passed Microsoft's Marketplace and Teams Store certification and was published on Microsoft AppSource
-(May 2026) and the Teams Store (August 2026). It never had a paying customer, and the hosted service has
-been shut down since October 2026.
+(May 2026) and the Teams Store (August 2026). The full case study, with screenshots:
+https://mtichikawa.github.io/microclaw.html
 
 The product repository is private. This repository holds selected code, copied from it unchanged except
 where a `// [excerpt: …]` marker says what was cut or adapted, plus the tool-selection test data and an
@@ -18,7 +18,7 @@ evaluation you can re-run offline.
 | What was measured | Result | Reproduce |
 |---|---|---|
 | **Tool selection.** On 362 requests written blind by a separate agent that saw only the tool catalogue, how often every tool the request needed was offered | **98.1%** (355 / 362), vs **87.0%** for the selector production used | `npm run eval:selection`, offline, ~15 s |
-| **Agent eval.** 142 cases, offline replay: did the agent call the right tools | **134 of 142** on average over three runs, the same as sending all tools, with **49% fewer prompt tokens** per message\* | Not here: needs the full agent and its Microsoft 365 fixtures |
+| **Agent eval.** 142 cases, offline replay: did the agent call the right tools | **134 of 142** on average over three runs, with **49% fewer prompt tokens** per message than sending every tool\* | Not here: needs the full agent and its Microsoft 365 fixtures |
 | **A rejected design.** Offer only the top 3 tools plus a `find_tools` tool | Cheaper, but 125 of 142, and once it said it had saved an automation it hadn't | |
 
 \* Three runs each, measured with 85 tools, before two email-drafting tools were added.
@@ -89,20 +89,6 @@ npm run demo:score       # one case scored two ways: a draft passes, an unasked 
   was right. A text check exists, but it matches literal words and is too strict to quote.
 - **The test requests were written by a language model**, not real users. The 142 agent-eval cases were
   also used to choose the design; the sealed sets were scored once.
-
-The evals caught one bug: the agent confirmed a saved automation as "Deleted:", copying an example from
-its prompt. They missed another: "from now on, handle my briefing automatically" saved a memory note
-instead of scheduling anything, and the case passed because it didn't require a saved automation. Both
-are fixed, and that case now requires one.
-
-## What I'd change next
-
-- Check outbound recipients deterministically, so mail can't go to an address that first appeared in
-  content the agent read.
-- Return malformed tool arguments to the model as an error instead of running the tool with none.
-- Keep tool calls and their results together when compacting context.
-- Make a missing user timezone fail loudly instead of borrowing another user's.
-- Grade tool arguments against the fixture data, not just tool names.
 
 ## Paths in copied comments
 
